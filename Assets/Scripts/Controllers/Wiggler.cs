@@ -1,0 +1,43 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Wiggler : MonoBehaviour
+{
+    float yPos;
+    float yOrig;
+
+    float top;
+    float bot;
+
+    float speed = 0.8f;
+
+    Vector3 newPosition;
+
+    private void Start()
+    {
+        yOrig = transform.position.y;
+        top = yOrig + 0.3f;
+        bot = yOrig - 0.3f;
+
+        newPosition = new Vector3(0,1,0);
+    }
+
+    void Update()
+    {
+        yPos = transform.position.y;
+
+        if (yPos > top)
+        {
+            newPosition = new Vector3(0, -1, 0);
+        }
+        else if (yPos < bot)
+        {
+            yPos++;
+            newPosition = new Vector3(0, 1, 0);
+        }
+
+
+        transform.Translate(newPosition * Time.deltaTime * speed);
+    }
+}
