@@ -50,18 +50,6 @@ public class DifficultyManager : MonoBehaviour
 
     }
 
-    void AdjustShrinkaroo()
-    {
-        foreach (var shrinker in _shrinkers)
-        {
-            if (shrinker.LowerObstacle.transform.position.y < _lower && shrinker.UpperObstacle.transform.position.y > _upper)
-            {
-                shrinker.CanShrink = true;
-                StartCoroutine(StopShrinking());
-            }
-        }
-    }
-
     IEnumerator StopShrinking()
     {
         yield return new WaitForSeconds(_timeToShrink);

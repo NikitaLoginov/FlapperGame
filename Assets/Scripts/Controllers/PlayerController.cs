@@ -20,7 +20,6 @@ public class PlayerController : MonoBehaviour
     
     //Managers
     InvincibilityManager _invincibilityManager;
-    ContinueManager _continueManager;
 
     //Events
     public event Action GameOverHandler;
@@ -36,7 +35,7 @@ public class PlayerController : MonoBehaviour
     {
         _playerRb = GetComponent<Rigidbody>();
         _invincibilityManager = GameObject.Find("InvincibilityManager").GetComponent<InvincibilityManager>();
-        ContinueManager.ContinueHandler += Continue;
+        EventBroker.PlayerControllerContinueHandler += Continue;
 
         _continuePos = _playerRb.transform.position;
     }
