@@ -14,6 +14,8 @@ public class ContinueButton : MonoBehaviour
 
     void Continue()
     {
-        EventBroker.CallContinue();
+        EventBroker.PlayerControllerCallContinue();
     }
+
+
 }

@@ -54,12 +54,10 @@ public class PowerupButton : MonoBehaviour
 
     void ForwardDash()
     {
-        powerupName = "Forward Dash";
-
         speedManager.Speed = forwardDashSpeed;
         Debug.Log("Powerup speed: " + forwardDashSpeed);
         gameManager.ForwardDashButton.gameObject.SetActive(false);
-        StartCoroutine(PowerupSwitcher(forwardDashDuration, powerupName));
+        StartCoroutine(ForwardDashSwitcher(forwardDashDuration));
     }
 
     
@@ -67,6 +65,7 @@ public class PowerupButton : MonoBehaviour
     {
         powerupName = "Slow Motion"; 
         Debug.Log(powerupName + " Initiated");
+
         //powerup logic
         timeManager.DoSlowMotion();
         gameManager.SlowMotionButton.gameObject.SetActive(false);
@@ -80,36 +79,44 @@ public class PowerupButton : MonoBehaviour
         invincibilityManager.IsInvincible = true;
 
         gameManager.InvincibilityButton.gameObject.SetActive(false);
-        StartCoroutine(PowerupSwitcher(invincibilityManager.InvincibilityDuration, invincibilityManager.Name));
+        StartCoroutine(InvincSwitcher(invincibilityManager.InvincibilityDuration));
     }
 
-    
-    //helper that counts down time to switch powerup off
-    IEnumerator PowerupSwitcher(float powerupDuration, string powerupName)
+    //helpers that counts down time to switch powerup off
+    IEnumerator ForwardDashSwitcher(float powerupDuration)
     {
         yield return new WaitForSeconds(powerupDuration);
 
-        if (powerupName == "Forward Dash")
-        {
-             //switches speed to normal to finish the dash
-            speedManager.Speed = speedManager.NormalSpeed;
-            Debug.Log(powerupName + " Stopped");
-        }
+        //switches speed to normal to finish the dash
+        speedManager.Speed = speedManager.NormalSpeed;
+        Debug.Log(powerupName + " Stopped");
+    }
 
-        if (powerupName == "Slow Motion")
-        {
-            //reverse slomo effect
-            Debug.Log(powerupName + " Stopped");
-        }
+    IEnumerator InvincSwitcher(float powerupDuration)
+    { 
+        yield return new WaitForSeconds(powerupDuration);
 
-        if (powerupName == invincibilityManager.Name)
+        if (invincibilityManager.IsInsideObstacle)
         {
-            //reverse invincibility effect
+            StartCoroutine(CheckIfNotInObstacle(0.1f));
+        }
+        else
+        { 
             invincibilityManager.IsInvincible = false;
-
-            Debug.Log(powerupName + " Stopped");
         }
+    }
 
-        //add powerup to queue so it could spawn again
+    IEnumerator CheckIfNotInObstacle(float time)
+    {
+        yield return new WaitForSeconds(time);
+        Debug.Log("Start checking to end invincibility");
+        if (invincibilityManager.IsInsideObstacle)
+        {
+            StartCoroutine(CheckIfNotInObstacle(time));
+        }
+        else
+        {
+            invincibilityManager.IsInvincible = false;
+        }
     }
 }

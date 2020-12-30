@@ -21,30 +21,26 @@ public class PlayerController : MonoBehaviour
     //Managers
     InvincibilityManager _invincibilityManager;
 
-    //Events
-    public event Action GameOverHandler;
-    public event Action<int> UpdateScoreHandler;
-    public event Action ModifyDifficultyHandler;
-
-    public event Action ForwardDashHandler;
-    public event Action SlowMoHandler;
-    public event Action InvincibilityHandler;
-    public event Action ContinueHandler;
 
     void Start()
     {
         _playerRb = GetComponent<Rigidbody>();
         _invincibilityManager = GameObject.Find("InvincibilityManager").GetComponent<InvincibilityManager>();
+
         EventBroker.PlayerControllerContinueHandler += Continue;
 
         _continuePos = _playerRb.transform.position;
     }
 
+    private void OnDisable()
+    {
+        EventBroker.PlayerControllerContinueHandler -= Continue;
+    }
+
     public void Continue()
     {
         transform.position = _continuePos;
-        if (ContinueHandler != null)
-            ContinueHandler();
+        EventBroker.CallContinueGame();
     }
 
     private void Update()
@@ -78,7 +74,7 @@ public class PlayerController : MonoBehaviour
         // Instead of using property to check if game is over we instead are using event subscribtion to check it.
         // When game is over we unsubscribe from event which in turn make else part start working
         // You probably should test this somehow!
-        if (GameOverHandler != null && !_invincibilityManager.IsInvincible)
+        if (!_invincibilityManager.IsInvincible)
         {
             //Applying constant force to bird to simulate gravity
             _playerRb.AddForce(Vector3.down * _gravityConstant * _gravityModifier, ForceMode.Force);
@@ -91,9 +87,9 @@ public class PlayerController : MonoBehaviour
                 _canMove = false;
             }
         }
-        else if (GameOverHandler != null && _invincibilityManager.IsInvincible)
+        else if (_invincibilityManager.IsInvincible)
         {
-            transform.position = _invincibilityManager.InvincibilityPosition;
+            _playerRb.Sleep(); // to stop applying force
         }
         else
         {
@@ -119,8 +115,21 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag("Obstacle") && !_invincibilityManager.IsInvincible)
         {
             Debug.Log("Game over!");
-            if (GameOverHandler != null)
-                GameOverHandler();
+            EventBroker.CallGameOver();
+        }
+        else if (collision.gameObject.CompareTag("Obstacle") && _invincibilityManager.IsInvincible)
+        {
+            _invincibilityManager.IsInsideObstacle = true;
+            Debug.Log("Is inside obstacle: "+_invincibilityManager.IsInsideObstacle);
+        }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Obstacle"))
+        { 
+            _invincibilityManager.IsInsideObstacle = false;
+            Debug.Log("Is inside obstacle: " + _invincibilityManager.IsInsideObstacle);
         }
     }
 
@@ -128,32 +137,30 @@ public class PlayerController : MonoBehaviour
     {
         if (other.gameObject.CompareTag("ScoreTrigger"))
         {
-            if (UpdateScoreHandler != null)
-                UpdateScoreHandler(_pointValue);
+            EventBroker.CallUpdateScore(_pointValue);
 
-            if (ModifyDifficultyHandler != null)
-                ModifyDifficultyHandler();
+            EventBroker.CallDifficultyModifier();
 
         }
         else if (other.gameObject.CompareTag("Powerup"))
         {
             Debug.Log(other.gameObject.name);
             // set powerup button active
-            if (ForwardDashHandler != null && other.gameObject.name == "Dash(Clone)")
+            if (other.gameObject.name == "Dash(Clone)")
             {
-                ForwardDashHandler();
+                EventBroker.CallForwardDash();
                 other.gameObject.SetActive(false); // disable powerup
             }
 
-            if (SlowMoHandler != null && other.gameObject.name == "Slow(Clone)")
+            if (other.gameObject.name == "Slow(Clone)")
             {
-                SlowMoHandler();
+                EventBroker.CallSlowMotion();
                 other.gameObject.SetActive(false);
             }
 
-            if (InvincibilityHandler != null && other.gameObject.name == "Invincibility(Clone)")
+            if (other.gameObject.name == "Invincibility(Clone)")
             {
-                InvincibilityHandler();
+                EventBroker.CallInvincibility();
                 other.gameObject.SetActive(false);
             }
             // remove powerup from queue until it used?

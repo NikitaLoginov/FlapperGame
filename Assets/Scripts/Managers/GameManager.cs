@@ -7,10 +7,8 @@ public class GameManager : MonoBehaviour
 {
     //Player
     [SerializeField] GameObject player;
-    PlayerController playerController;
     DifficultyManager difficultyManager;
     TimeManager timeManager;
-    //ContinueButton continueButtonScript;
 
     //UI
     [SerializeField] TextMeshProUGUI scoreText;
@@ -26,9 +24,10 @@ public class GameManager : MonoBehaviour
     public GameObject InvincibilityButton { get { return invincibilityButton; } }
 
     //Variables
-    bool isGameOver;
-    public bool IsGameOver { get { return isGameOver; } }
+    bool _isGameOver;
+    public bool IsGameOver { get { return _isGameOver; } }
     int score;
+    int continuesLeft = 3;
 
     //Spawn
     Vector3 spawnPos;
@@ -53,10 +52,11 @@ public class GameManager : MonoBehaviour
         powerupManager.gameObject.SetActive(true);
 
         player.gameObject.SetActive(true);
-        playerController = FindObjectOfType<PlayerController>();
+
+        //playerController = FindObjectOfType<PlayerController>();
         difficultyManager = FindObjectOfType<DifficultyManager>();
         timeManager = FindObjectOfType<TimeManager>();
-        //continueButtonScript = FindObjectOfType<ContinueButton>();
+        timeManager.StopTime(true);
     }
     public void StartGame()
     {
@@ -64,25 +64,27 @@ public class GameManager : MonoBehaviour
         tapTheScreenText.gameObject.SetActive(false);
 
         //Variables
-        isGameOver = false;
+        _isGameOver = false;
 
         //Events
-        playerController.GameOverHandler += GameOver;
-        playerController.ForwardDashHandler += TurnOnDashButton; //On when getting powerup
-        playerController.SlowMoHandler += TurnOnSlowMoButton; //On when getting powerup
-        playerController.InvincibilityHandler += TurnOnInvincibilityButton; //On when getting powerup
-        playerController.UpdateScoreHandler += UpdateScore;
-        playerController.ContinueHandler += ContinueGame;
+        EventBroker.GameOverHandler += GameOver;
+        EventBroker.RestartGameHandler += RestartGame;
+        EventBroker.ForwardDashHandler += TurnOnDashButton; //On when getting powerup
+        EventBroker.SlowMotionHandler += TurnOnSlowMoButton; //On when getting powerup
+        EventBroker.InvincibilityHandler += TurnOnInvincibilityButton; //On when getting powerup
 
-        playerController.ModifyDifficultyHandler += difficultyManager.ModifyDifficulty;
+        EventBroker.UpdateScoreHandler += UpdateScore;
+        EventBroker.ContinueGameHandler += ContinueGame;
+
+        EventBroker.DifficultyHandler += difficultyManager.ModifyDifficulty;
         difficultyManager.CreateShrinkersList();
         
         //Coroutines
         StartCoroutine(SpawnObstacle());
         StartCoroutine(SpawnPowerup());
         UpdateScore(score);
+        timeManager.StopTime(false);
     }
-
 
     private void TurnOnInvincibilityButton()
     {
@@ -107,20 +109,27 @@ public class GameManager : MonoBehaviour
 
     void GameOver()
     {
-        isGameOver = true;
+        _isGameOver = true;
         gameOverScreen.gameObject.SetActive(true);
 
         PowerupButtonsOn(false);
-        //Time.timeScale = 0f; // put game on pause
         timeManager.StopTime(true);
+        StopAllCoroutines();
     }
     private void ContinueGame()
     {
-        isGameOver = false;
+        _isGameOver = false;
         gameOverScreen.gameObject.SetActive(false);
 
-        //Time.timeScale = 1f;
         timeManager.StopTime(false);
+
+        continuesLeft--;
+        //Show ad
+        if (continuesLeft < 1)
+            gameOverScreen.transform.GetChild(2).gameObject.SetActive(false);
+
+        StartCoroutine(SpawnObstacle());
+        StartCoroutine(SpawnPowerup());
     }
 
     void PowerupButtonsOn(bool isOn)
@@ -129,28 +138,32 @@ public class GameManager : MonoBehaviour
         slowMotionButton.gameObject.SetActive(isOn);
         invincibilityButton.gameObject.SetActive(isOn);
     }
-    public void RestartGame()
-    {
-        playerController.UpdateScoreHandler -= UpdateScore;
-        playerController.ModifyDifficultyHandler -= difficultyManager.ModifyDifficulty;
-        playerController.GameOverHandler -= GameOver;
 
-        playerController.ForwardDashHandler -= TurnOnDashButton; //On when getting powerup
-        playerController.SlowMoHandler -= TurnOnSlowMoButton; //On when getting powerup
-        playerController.InvincibilityHandler -= TurnOnInvincibilityButton;
+    //Restarting scene and unsubscribing from events here
+    void RestartGame()
+    {
+        EventBroker.UpdateScoreHandler -= UpdateScore;
+
+        EventBroker.DifficultyHandler -= difficultyManager.ModifyDifficulty;
+        EventBroker.GameOverHandler -= GameOver;
+        EventBroker.RestartGameHandler -= RestartGame;
+
+        EventBroker.ForwardDashHandler -= TurnOnDashButton; //On when getting powerup
+        EventBroker.SlowMotionHandler -= TurnOnSlowMoButton; //On when getting powerup
+        EventBroker.InvincibilityHandler -= TurnOnInvincibilityButton;
+        EventBroker.ContinueGameHandler -= ContinueGame;
 
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     IEnumerator SpawnObstacle()
     {
-        while (!isGameOver)
+        while (!_isGameOver)
         {
             yield return new WaitForSeconds(spawnRate * difficultyManager.DifficultyModifier);
 
             ySpawnPos = Random.Range(-3, 10);
             spawnPos = new Vector3(15, ySpawnPos, 0);
-
 
             GameObject pooledObstacle = ObjectPooler.SharedInstance.GetPooledObstacle();
             if (pooledObstacle != null)
@@ -163,7 +176,7 @@ public class GameManager : MonoBehaviour
 
     IEnumerator SpawnPowerup()
     {
-        while (!isGameOver)
+        while (!_isGameOver)
         {
             powerupSpawnRate = GetSpawnRate();
             yield return new WaitForSeconds(powerupSpawnRate * difficultyManager.DifficultyModifier);

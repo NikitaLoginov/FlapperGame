@@ -1867,6 +1867,16 @@ PrefabInstance:
       propertyPath: m_UseGravity
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3544481831087515104, guid: c03588998e95a014b803dc5404f98cf4,
+        type: 3}
+      propertyPath: m_Constraints
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 3544481831087515105, guid: c03588998e95a014b803dc5404f98cf4,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3546465812335302999, guid: c03588998e95a014b803dc5404f98cf4,
         type: 3}
       propertyPath: m_Name
@@ -1972,6 +1982,7 @@ GameObject:
   - component: {fileID: 917484254}
   - component: {fileID: 917484253}
   - component: {fileID: 917484252}
+  - component: {fileID: 917484251}
   m_Layer: 5
   m_Name: RestartButton
   m_TagString: Untagged
@@ -1999,6 +2010,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -55}
   m_SizeDelta: {x: 390, y: 73}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &917484251
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 917484249}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb44288cf7fa09345a4b6f02150975be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &917484252
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2041,18 +2064,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 917484253}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 62565881}
-        m_MethodName: RestartGame
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &917484253
 MonoBehaviour:
   m_ObjectHideFlags: 0
