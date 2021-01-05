@@ -4,16 +4,25 @@ using UnityEngine;
 
 public class ObjectPooler : MonoBehaviour
 {
+    //Obstacles
     public static ObjectPooler SharedInstance;
     public List<GameObject> pooledObstacles;
     public GameObject obstaclesToPool;
     public int amountObstaclesToPool;
 
+    //Powerups
     public List<GameObject> pooledPowerups;
     public GameObject dashPowerupToPool;
     public GameObject slowMoPowerupToPool;
     public GameObject invincibilityPowerupToPool;
     public int amountPowerupsToPool;
+
+    //Coins
+    public List<GameObject> pooledCoinPatterns;
+    public GameObject tapPatterToPool;
+    public GameObject slidePatternToPool;
+    public GameObject abducePatternToPool;
+    public int amountCoinPatternsToPool;
 
     private void Awake()
     {
@@ -51,6 +60,26 @@ public class ObjectPooler : MonoBehaviour
             slow.transform.SetParent(this.transform);
             invinc.transform.SetParent(this.transform);
         }
+
+        pooledCoinPatterns = new List<GameObject>();
+        for (int i = 0; i < amountCoinPatternsToPool; i++)
+        {
+            GameObject tapPattern = (GameObject)Instantiate(tapPatterToPool);
+            GameObject slidePattern = (GameObject)Instantiate(slidePatternToPool);
+            GameObject abducePattern = (GameObject)Instantiate(abducePatternToPool);
+
+            tapPattern.SetActive(false);
+            slidePattern.SetActive(false);
+            abducePattern.SetActive(false);
+
+            pooledCoinPatterns.Add(tapPattern);
+            pooledCoinPatterns.Add(slidePattern);
+            pooledCoinPatterns.Add(abducePattern);
+
+            tapPattern.transform.SetParent(this.transform);
+            slidePattern.transform.SetParent(this.transform);
+            abducePattern.transform.SetParent(this.transform);
+        }
     }
 
     public GameObject GetPooledObstacle()
@@ -76,6 +105,19 @@ public class ObjectPooler : MonoBehaviour
             {
                 return pooledPowerups[j];
             }    
+        }
+
+        return null;
+    }
+
+    public GameObject GetPooledCoinPattern()
+    {
+        for (int i = 0; i < pooledCoinPatterns.Count; i++)
+        {
+            if (!pooledCoinPatterns[i].activeInHierarchy)
+            {
+                return pooledCoinPatterns[i];
+            }
         }
 
         return null;

@@ -32,6 +32,14 @@ public class MoveLeft : MonoBehaviour
         {
             gameObject.SetActive(false);
         }
+        else if (transform.position.x < _leftBound && gameObject.CompareTag("CoinTapPattern"))
+        {
+            gameObject.SetActive(false);
+        }
+        //if (transform.position.x < _leftBound)
+        //{
+        //    gameObject.SetActive(false);
+        //}
     }
 
     public void MoveLeftWithSpeed(float movementSpeed)
@@ -40,7 +48,15 @@ public class MoveLeft : MonoBehaviour
         {
             transform.Translate(Vector3.back * Time.deltaTime * movementSpeed);
         }
+        //else
+        //{
+        //    transform.Translate(Vector3.left * Time.deltaTime * movementSpeed);
+        //}
         else if (gameObject.CompareTag("Powerup"))
+        {
+            transform.Translate(Vector3.left * Time.deltaTime * movementSpeed);
+        }
+        else if (gameObject.CompareTag("CoinTapPattern"))
         {
             transform.Translate(Vector3.left * Time.deltaTime * movementSpeed);
         }

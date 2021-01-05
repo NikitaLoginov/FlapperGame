@@ -38,6 +38,7 @@ public class GameManager : MonoBehaviour
     int xPowerupSpawnPos;
     int yPowerupSpawnPos;
     float powerupSpawnRate;
+    float coinsSpawnRate = 2f;
 
     public void CanStartGame()
     {
@@ -53,7 +54,6 @@ public class GameManager : MonoBehaviour
 
         player.gameObject.SetActive(true);
 
-        //playerController = FindObjectOfType<PlayerController>();
         difficultyManager = FindObjectOfType<DifficultyManager>();
         timeManager = FindObjectOfType<TimeManager>();
         timeManager.StopTime(true);
@@ -82,6 +82,8 @@ public class GameManager : MonoBehaviour
         //Coroutines
         StartCoroutine(SpawnObstacle());
         StartCoroutine(SpawnPowerup());
+        StartCoroutine(SpawnCoins());
+
         UpdateScore(score);
         timeManager.StopTime(false);
     }
@@ -130,6 +132,7 @@ public class GameManager : MonoBehaviour
 
         StartCoroutine(SpawnObstacle());
         StartCoroutine(SpawnPowerup());
+        StartCoroutine(SpawnCoins());
     }
 
     void PowerupButtonsOn(bool isOn)
@@ -190,6 +193,30 @@ public class GameManager : MonoBehaviour
             {
                 pooledPowerup.SetActive(true);
                 pooledPowerup.transform.position = spawnPowerupPos;
+            }
+        }
+    }
+
+    IEnumerator SpawnCoins()
+    {
+        while (!_isGameOver)
+        {
+            yield return new WaitForSeconds(coinsSpawnRate * difficultyManager.DifficultyModifier);
+
+
+            Vector3 spawnCoinsPosition = new Vector3(13, 0, 3); //reconfigure hard coded values!
+
+            GameObject pooledCoinsPattern = ObjectPooler.SharedInstance.GetPooledCoinPattern();
+            if (pooledCoinsPattern != null)
+            {
+                pooledCoinsPattern.SetActive(true);
+                pooledCoinsPattern.transform.position = spawnCoinsPosition;
+
+                //check if needs refactoring
+                for (int i = 0; i < pooledCoinsPattern.transform.childCount; i++)
+                {
+                    pooledCoinsPattern.transform.GetChild(i).gameObject.SetActive(true);
+                }
             }
         }
     }
