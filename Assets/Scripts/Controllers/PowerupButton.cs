@@ -6,80 +6,80 @@ using UnityEngine.UI;
 public class PowerupButton : MonoBehaviour
 {
     // Forward dash
-    float forwardDashSpeed;
-    float forwardDashFactor = 5f;
-    float forwardDashDuration = 0.1f;
-    Button forwardDashButton;
+    float _forwardDashSpeed;
+    float _forwardDashFactor = 5f;
+    float _forwardDashDuration = 0.1f;
+    Button _forwardDashButton;
 
     //Slow Motion
-    Button slowMotionButton;
+    Button _slowMotionButton;
 
     //Invincibility
-    Button invincibilityButton;
+    Button _invincibilityButton;
 
     //Managers
-    GameManager gameManager;
-    TimeManager timeManager;
-    SpeedManager speedManager;
-    InvincibilityManager invincibilityManager;
+    GameManager _gameManager;
+    TimeManager _timeManager;
+    SpeedManager _speedManager;
+    InvincibilityManager _invincibilityManager;
 
     //Temp
-    string powerupName;
+    string _powerupName;
 
 
     void Awake()
     {
         //Managers
-        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        _gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 
-        timeManager = GameObject.Find("TimeManager").GetComponent<TimeManager>();
+        _timeManager = GameObject.Find("TimeManager").GetComponent<TimeManager>();
 
-        speedManager = GameObject.Find("SpeedManager").GetComponent<SpeedManager>();
+        _speedManager = GameObject.Find("SpeedManager").GetComponent<SpeedManager>();
 
-        invincibilityManager = GameObject.Find("InvincibilityManager").GetComponent<InvincibilityManager>();
+        _invincibilityManager = GameObject.Find("InvincibilityManager").GetComponent<InvincibilityManager>();
 
-        forwardDashButton = gameManager.ForwardDashButton.GetComponent<Button>();
+        _forwardDashButton = _gameManager.ForwardDashButton.GetComponent<Button>();
 
-        slowMotionButton = gameManager.SlowMotionButton.GetComponent<Button>();
+        _slowMotionButton = _gameManager.SlowMotionButton.GetComponent<Button>();
 
-        invincibilityButton = gameManager.InvincibilityButton.GetComponent<Button>();
+        _invincibilityButton = _gameManager.InvincibilityButton.GetComponent<Button>();
 
-        forwardDashSpeed = speedManager.Speed * forwardDashFactor;
-        forwardDashButton.onClick.AddListener(ForwardDash);
+        _forwardDashSpeed = _speedManager.Speed * _forwardDashFactor;
+        _forwardDashButton.onClick.AddListener(ForwardDash);
 
-        slowMotionButton.onClick.AddListener(SlowMotion);
+        _slowMotionButton.onClick.AddListener(SlowMotion);
 
-        invincibilityButton.onClick.AddListener(Invincibility);
+        _invincibilityButton.onClick.AddListener(Invincibility);
     }
 
     void ForwardDash()
     {
-        speedManager.Speed = forwardDashSpeed;
-        Debug.Log("Powerup speed: " + forwardDashSpeed);
-        gameManager.ForwardDashButton.gameObject.SetActive(false);
-        StartCoroutine(ForwardDashSwitcher(forwardDashDuration));
+        _speedManager.Speed = _forwardDashSpeed;
+        Debug.Log("Powerup speed: " + _forwardDashSpeed);
+        _gameManager.ForwardDashButton.gameObject.SetActive(false);
+        StartCoroutine(ForwardDashSwitcher(_forwardDashDuration));
     }
 
     
     void SlowMotion()
     {
-        powerupName = "Slow Motion"; 
-        Debug.Log(powerupName + " Initiated");
+        _powerupName = "Slow Motion"; 
+        Debug.Log(_powerupName + " Initiated");
 
         //powerup logic
-        timeManager.DoSlowMotion();
-        gameManager.SlowMotionButton.gameObject.SetActive(false);
+        _timeManager.DoSlowMotion();
+        _gameManager.SlowMotionButton.gameObject.SetActive(false);
     }
 
     void Invincibility()
     {
-        Debug.Log(invincibilityManager.name +" Initiated");
+        Debug.Log(_invincibilityManager.name +" Initiated");
 
         //powerup logic
-        invincibilityManager.IsInvincible = true;
+        _invincibilityManager.IsInvincible = true;
 
-        gameManager.InvincibilityButton.gameObject.SetActive(false);
-        StartCoroutine(InvincSwitcher(invincibilityManager.InvincibilityDuration));
+        _gameManager.InvincibilityButton.gameObject.SetActive(false);
+        StartCoroutine(InvincSwitcher(_invincibilityManager.InvincibilityDuration));
     }
 
     //helpers that counts down time to switch powerup off
@@ -88,21 +88,21 @@ public class PowerupButton : MonoBehaviour
         yield return new WaitForSeconds(powerupDuration);
 
         //switches speed to normal to finish the dash
-        speedManager.Speed = speedManager.NormalSpeed;
-        Debug.Log(powerupName + " Stopped");
+        _speedManager.Speed = _speedManager.NormalSpeed;
+        Debug.Log(_powerupName + " Stopped");
     }
 
     IEnumerator InvincSwitcher(float powerupDuration)
     { 
         yield return new WaitForSeconds(powerupDuration);
 
-        if (invincibilityManager.IsInsideObstacle)
+        if (_invincibilityManager.IsInsideObstacle)
         {
             StartCoroutine(CheckIfNotInObstacle(0.1f));
         }
         else
         { 
-            invincibilityManager.IsInvincible = false;
+            _invincibilityManager.IsInvincible = false;
         }
     }
 
@@ -110,13 +110,13 @@ public class PowerupButton : MonoBehaviour
     {
         yield return new WaitForSeconds(time);
         Debug.Log("Start checking to end invincibility");
-        if (invincibilityManager.IsInsideObstacle)
+        if (_invincibilityManager.IsInsideObstacle)
         {
             StartCoroutine(CheckIfNotInObstacle(time));
         }
         else
         {
-            invincibilityManager.IsInvincible = false;
+            _invincibilityManager.IsInvincible = false;
         }
     }
 }

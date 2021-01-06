@@ -5,7 +5,7 @@ using UnityEngine;
 public class CoinsTapController : MonoBehaviour
 {
 
-    List<Transform> coins = new List<Transform>();
+    List<Transform> _coins = new List<Transform>();
     int _pointsForCoin = 1;
 
     private void Start()
@@ -13,7 +13,7 @@ public class CoinsTapController : MonoBehaviour
 
         for (int i = 0; i < transform.childCount; i++)
         {
-            coins.Add(transform.GetChild(i));
+            _coins.Add(transform.GetChild(i));
         }
     }
 
@@ -29,9 +29,9 @@ public class CoinsTapController : MonoBehaviour
             //something hit
             if (Physics.Raycast(raycast, out raycastHit))
             {
-                for (int i = 0; i < coins.Count; i++)
+                for (int i = 0; i < _coins.Count; i++)
                 {
-                    if (raycastHit.collider.transform.position == coins[i].position)
+                    if (raycastHit.collider.transform.position == _coins[i].position)
                     {
                         raycastHit.collider.gameObject.SetActive(false);
                         EventBroker.CallUpdateScore(_pointsForCoin);

@@ -4,19 +4,14 @@ using UnityEngine;
 
 public class TimeManager : MonoBehaviour
 {
-    float slowdownFactor = 0.05f;
-    float slowMotionLength = 3f;
-    bool isTimeStoped;
-
-
-    void Start()
-    {
-    }
+    float _slowdownFactor = 0.05f;
+    float _slowMotionLength = 3f;
+    bool _isTimeStoped;
 
 
     void Update()
     {
-        if (!isTimeStoped)
+        if (!_isTimeStoped)
         { 
             NormilizeTime();
         }
@@ -24,13 +19,13 @@ public class TimeManager : MonoBehaviour
 
     private void NormilizeTime()
     {
-        Time.timeScale += (1f / slowMotionLength) * Time.unscaledDeltaTime; //unscaledDeltaTime is like deltaTime, but calculated unrelated to timeScale
+        Time.timeScale += (1f / _slowMotionLength) * Time.unscaledDeltaTime; //unscaledDeltaTime is like deltaTime, but calculated unrelated to timeScale
         Time.timeScale = Mathf.Clamp(Time.timeScale, 0f, 1f); // clamp time between 0 and normal time (1)
     }
 
     public void DoSlowMotion()
     {
-        Time.timeScale = slowdownFactor;
+        Time.timeScale = _slowdownFactor;
         Time.fixedDeltaTime = Time.timeScale * 0.2f;
     }
 
@@ -45,7 +40,7 @@ public class TimeManager : MonoBehaviour
             Time.timeScale = 1f;
         }
         
-        isTimeStoped = canStop;
+        _isTimeStoped = canStop;
 
     }
 }

@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class SpeedManager : MonoBehaviour
 {
-    float speed;
-    float normalSpeed = 10f;
-    public float NormalSpeed { get { return normalSpeed; }  }
-    public float Speed { get { return speed; } set { speed = value; } }
+    float _speed;
+    float _normalSpeed = 10f;
+    public float NormalSpeed { get { return _normalSpeed; }  }
+    public float Speed { get { return _speed; } set { _speed = value; } }
 
     private void Awake()
     {
-        speed = normalSpeed;
+        _speed = _normalSpeed;
     }
 }

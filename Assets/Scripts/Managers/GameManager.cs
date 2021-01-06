@@ -7,8 +7,8 @@ public class GameManager : MonoBehaviour
 {
     //Player
     [SerializeField] GameObject player;
-    DifficultyManager difficultyManager;
-    TimeManager timeManager;
+    DifficultyManager _difficultyManager;
+    TimeManager _timeManager;
 
     //UI
     [SerializeField] TextMeshProUGUI scoreText;
@@ -26,19 +26,19 @@ public class GameManager : MonoBehaviour
     //Variables
     bool _isGameOver;
     public bool IsGameOver { get { return _isGameOver; } }
-    int score;
-    int continuesLeft = 3;
+    int _score;
+    int _continuesLeft = 3;
 
     //Spawn
-    Vector3 spawnPos;
-    int ySpawnPos;
-    float spawnRate = 2f;
+    Vector3 _spawnPos;
+    int _ySpawnPos;
+    float _spawnRate = 2f;
 
-    Vector3 spawnPowerupPos;
-    int xPowerupSpawnPos;
-    int yPowerupSpawnPos;
-    float powerupSpawnRate;
-    float coinsSpawnRate = 2f;
+    Vector3 _spawnPowerupPos;
+    int _xPowerupSpawnPos;
+    int _yPowerupSpawnPos;
+    float _powerupSpawnRate;
+    float _coinsSpawnRate = 2f;
 
     public void CanStartGame()
     {
@@ -46,7 +46,7 @@ public class GameManager : MonoBehaviour
         titleScreen.gameObject.SetActive(false);
         tapTheScreenText.gameObject.SetActive(true);
 
-        score = 0;
+        _score = 0;
         scoreText.gameObject.SetActive(true);
 
         //Manager set active
@@ -54,9 +54,9 @@ public class GameManager : MonoBehaviour
 
         player.gameObject.SetActive(true);
 
-        difficultyManager = FindObjectOfType<DifficultyManager>();
-        timeManager = FindObjectOfType<TimeManager>();
-        timeManager.StopTime(true);
+        _difficultyManager = FindObjectOfType<DifficultyManager>();
+        _timeManager = FindObjectOfType<TimeManager>();
+        _timeManager.StopTime(true);
     }
     public void StartGame()
     {
@@ -76,16 +76,16 @@ public class GameManager : MonoBehaviour
         EventBroker.UpdateScoreHandler += UpdateScore;
         EventBroker.ContinueGameHandler += ContinueGame;
 
-        EventBroker.DifficultyHandler += difficultyManager.ModifyDifficulty;
-        difficultyManager.CreateShrinkersList();
+        EventBroker.DifficultyHandler += _difficultyManager.ModifyDifficulty;
+        _difficultyManager.CreateShrinkersList();
         
         //Coroutines
         StartCoroutine(SpawnObstacle());
         StartCoroutine(SpawnPowerup());
         StartCoroutine(SpawnCoins());
 
-        UpdateScore(score);
-        timeManager.StopTime(false);
+        UpdateScore(_score);
+        _timeManager.StopTime(false);
     }
 
     private void TurnOnInvincibilityButton()
@@ -105,8 +105,8 @@ public class GameManager : MonoBehaviour
 
     void UpdateScore(int scoreToAdd)
     {
-        score += scoreToAdd;
-        scoreText.text = "Score: " + score;
+        _score += scoreToAdd;
+        scoreText.text = "Score: " + _score;
     }
 
     void GameOver()
@@ -115,7 +115,7 @@ public class GameManager : MonoBehaviour
         gameOverScreen.gameObject.SetActive(true);
 
         PowerupButtonsOn(false);
-        timeManager.StopTime(true);
+        _timeManager.StopTime(true);
         StopAllCoroutines();
     }
     private void ContinueGame()
@@ -123,11 +123,11 @@ public class GameManager : MonoBehaviour
         _isGameOver = false;
         gameOverScreen.gameObject.SetActive(false);
 
-        timeManager.StopTime(false);
+        _timeManager.StopTime(false);
 
-        continuesLeft--;
+        _continuesLeft--;
         //Show ad
-        if (continuesLeft < 1)
+        if (_continuesLeft < 1)
             gameOverScreen.transform.GetChild(2).gameObject.SetActive(false);
 
         StartCoroutine(SpawnObstacle());
@@ -147,7 +147,7 @@ public class GameManager : MonoBehaviour
     {
         EventBroker.UpdateScoreHandler -= UpdateScore;
 
-        EventBroker.DifficultyHandler -= difficultyManager.ModifyDifficulty;
+        EventBroker.DifficultyHandler -= _difficultyManager.ModifyDifficulty;
         EventBroker.GameOverHandler -= GameOver;
         EventBroker.RestartGameHandler -= RestartGame;
 
@@ -163,16 +163,16 @@ public class GameManager : MonoBehaviour
     {
         while (!_isGameOver)
         {
-            yield return new WaitForSeconds(spawnRate * difficultyManager.DifficultyModifier);
+            yield return new WaitForSeconds(_spawnRate * _difficultyManager.DifficultyModifier);
 
-            ySpawnPos = Random.Range(-3, 10);
-            spawnPos = new Vector3(15, ySpawnPos, 0);
+            _ySpawnPos = Random.Range(-3, 10);
+            _spawnPos = new Vector3(15, _ySpawnPos, 0);
 
             GameObject pooledObstacle = ObjectPooler.SharedInstance.GetPooledObstacle();
             if (pooledObstacle != null)
             {
                 pooledObstacle.SetActive(true);
-                pooledObstacle.transform.position = spawnPos;
+                pooledObstacle.transform.position = _spawnPos;
             }
         }
     }
@@ -181,18 +181,18 @@ public class GameManager : MonoBehaviour
     {
         while (!_isGameOver)
         {
-            powerupSpawnRate = GetSpawnRate();
-            yield return new WaitForSeconds(powerupSpawnRate * difficultyManager.DifficultyModifier);
+            _powerupSpawnRate = GetSpawnRate();
+            yield return new WaitForSeconds(_powerupSpawnRate * _difficultyManager.DifficultyModifier);
 
-            yPowerupSpawnPos = Random.Range(-3, 10); 
-            xPowerupSpawnPos = Random.Range(10, 14);
-            spawnPowerupPos = new Vector3(xPowerupSpawnPos, yPowerupSpawnPos, 0);
+            _yPowerupSpawnPos = Random.Range(-3, 10); 
+            _xPowerupSpawnPos = Random.Range(10, 14);
+            _spawnPowerupPos = new Vector3(_xPowerupSpawnPos, _yPowerupSpawnPos, 0);
 
             GameObject pooledPowerup = ObjectPooler.SharedInstance.GetPooledPowerup();
             if (pooledPowerup != null)
             {
                 pooledPowerup.SetActive(true);
-                pooledPowerup.transform.position = spawnPowerupPos;
+                pooledPowerup.transform.position = _spawnPowerupPos;
             }
         }
     }
@@ -201,7 +201,7 @@ public class GameManager : MonoBehaviour
     {
         while (!_isGameOver)
         {
-            yield return new WaitForSeconds(coinsSpawnRate * difficultyManager.DifficultyModifier);
+            yield return new WaitForSeconds(_coinsSpawnRate * _difficultyManager.DifficultyModifier);
 
 
             Vector3 spawnCoinsPosition = new Vector3(13, 0, 3); //reconfigure hard coded values!
