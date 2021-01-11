@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     bool _canMove;
 
     int _pointValue = 1;
+    int _regularCoinValue = 1;
     Rigidbody _playerRb;
     Vector3 _gameOverPos;
     Vector3 _continuePos;
@@ -163,7 +164,11 @@ public class PlayerController : MonoBehaviour
                 EventBroker.CallInvincibility();
                 other.gameObject.SetActive(false);
             }
-            // remove powerup from queue until it used?
+        }
+        else if (other.gameObject.CompareTag("Coin"))
+        {
+            other.gameObject.SetActive(false);
+            EventBroker.CallUpdateScore(_regularCoinValue);
         }
     }
 

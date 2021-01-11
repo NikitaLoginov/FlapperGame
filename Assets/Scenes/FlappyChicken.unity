@@ -23,10 +23,10 @@ RenderSettings:
   m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
-  m_AmbientIntensity: 1
+  m_AmbientIntensity: 0.9
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 617d9be015db68348a623b01ea51a8c5, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 170076734}
-  m_IndirectSpecularColor: {r: 0.44546217, g: 0.49512464, b: 0.57406414, a: 1}
+  m_IndirectSpecularColor: {r: 0.4723423, g: 0.8014174, b: 0.8965855, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -423,7 +423,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 2.2e-44, y: 4.5e-44, z: 1.1e-44, w: 1.1e-44}
+  m_BoundingSphereOverride: {x: 0, y: 2.7196e-41, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -1160,7 +1160,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!64 &537341133
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -1766,6 +1766,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_RootOrder
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3539963326034914725, guid: c03588998e95a014b803dc5404f98cf4,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3539963326034914725, guid: c03588998e95a014b803dc5404f98cf4,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3539963326034914725, guid: c03588998e95a014b803dc5404f98cf4,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 3539963326034914725, guid: c03588998e95a014b803dc5404f98cf4,
         type: 3}
@@ -3430,6 +3445,14 @@ MonoBehaviour:
   abducePatternToPool: {fileID: 1431686830358438043, guid: 29624cfed42110f4c874c2ee1023f519,
     type: 3}
   amountCoinPatternsToPool: 1
+  pooledCloudPatterns: []
+  cloudPattern01ToPool: {fileID: 1387365988225721993, guid: 1918210b1bdf21844a0b1cf337582803,
+    type: 3}
+  cloudPattern02ToPool: {fileID: 1387365988225721993, guid: 1918210b1bdf21844a0b1cf337582803,
+    type: 3}
+  cloudPattern03ToPool: {fileID: 1387365988225721993, guid: 1918210b1bdf21844a0b1cf337582803,
+    type: 3}
+  amountCloudPatternsToPool: 1
 --- !u!4 &2009078277
 Transform:
   m_ObjectHideFlags: 0

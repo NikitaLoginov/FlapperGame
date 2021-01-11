@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject player;
     DifficultyManager _difficultyManager;
     TimeManager _timeManager;
+    SpeedManager _speedManager;
 
     //UI
     [SerializeField] TextMeshProUGUI scoreText;
@@ -32,13 +33,13 @@ public class GameManager : MonoBehaviour
     //Spawn
     Vector3 _spawnPos;
     int _ySpawnPos;
-    float _spawnRate = 2f;
+    float _spawnRate = 5f;
 
     Vector3 _spawnPowerupPos;
     int _xPowerupSpawnPos;
     int _yPowerupSpawnPos;
     float _powerupSpawnRate;
-    float _coinsSpawnRate = 2f;
+    float _coinsSpawnRate = 5f;
 
     public void CanStartGame()
     {
@@ -56,6 +57,7 @@ public class GameManager : MonoBehaviour
 
         _difficultyManager = FindObjectOfType<DifficultyManager>();
         _timeManager = FindObjectOfType<TimeManager>();
+
         _timeManager.StopTime(true);
     }
     public void StartGame()
@@ -83,6 +85,7 @@ public class GameManager : MonoBehaviour
         StartCoroutine(SpawnObstacle());
         StartCoroutine(SpawnPowerup());
         StartCoroutine(SpawnCoins());
+        StartCoroutine(SpawnClouds());
 
         UpdateScore(_score);
         _timeManager.StopTime(false);
@@ -133,6 +136,7 @@ public class GameManager : MonoBehaviour
         StartCoroutine(SpawnObstacle());
         StartCoroutine(SpawnPowerup());
         StartCoroutine(SpawnCoins());
+        StartCoroutine(SpawnClouds());
     }
 
     void PowerupButtonsOn(bool isOn)
@@ -166,7 +170,7 @@ public class GameManager : MonoBehaviour
             yield return new WaitForSeconds(_spawnRate * _difficultyManager.DifficultyModifier);
 
             _ySpawnPos = Random.Range(-3, 10);
-            _spawnPos = new Vector3(15, _ySpawnPos, 0);
+            _spawnPos = new Vector3(20, _ySpawnPos, 0);
 
             GameObject pooledObstacle = ObjectPooler.SharedInstance.GetPooledObstacle();
             if (pooledObstacle != null)
@@ -185,7 +189,7 @@ public class GameManager : MonoBehaviour
             yield return new WaitForSeconds(_powerupSpawnRate * _difficultyManager.DifficultyModifier);
 
             _yPowerupSpawnPos = Random.Range(-3, 10); 
-            _xPowerupSpawnPos = Random.Range(10, 14);
+            _xPowerupSpawnPos = Random.Range(12, 18);
             _spawnPowerupPos = new Vector3(_xPowerupSpawnPos, _yPowerupSpawnPos, 0);
 
             GameObject pooledPowerup = ObjectPooler.SharedInstance.GetPooledPowerup();
@@ -204,7 +208,7 @@ public class GameManager : MonoBehaviour
             yield return new WaitForSeconds(_coinsSpawnRate * _difficultyManager.DifficultyModifier);
 
 
-            Vector3 spawnCoinsPosition = new Vector3(13, 0, 3); //reconfigure hard coded values!
+            Vector3 spawnCoinsPosition = new Vector3(12, 0, 0); //reconfigure hard coded values!
 
             GameObject pooledCoinsPattern = ObjectPooler.SharedInstance.GetPooledCoinPattern();
             if (pooledCoinsPattern != null)
@@ -218,6 +222,26 @@ public class GameManager : MonoBehaviour
                     pooledCoinsPattern.transform.GetChild(i).gameObject.SetActive(true);
                 }
             }
+        }
+    }
+
+    IEnumerator SpawnClouds()
+    {
+        while (!_isGameOver)
+        {
+            yield return new WaitForSeconds(1f);
+
+            Vector3 spawnCloudsPos = new Vector3(100, 0, 0);
+
+            GameObject pooledCouldsPatter = ObjectPooler.SharedInstance.GetPooledCloudPattern();
+            
+            if (pooledCouldsPatter != null)
+            {
+                pooledCouldsPatter.SetActive(true);
+                pooledCouldsPatter.transform.position = spawnCloudsPos;
+            }
+
+            yield return new WaitForSeconds(28f);
         }
     }
 

@@ -24,6 +24,13 @@ public class ObjectPooler : MonoBehaviour
     public GameObject abducePatternToPool;
     public int amountCoinPatternsToPool;
 
+    //Clouds
+    public List<GameObject> pooledCloudPatterns;
+    public GameObject cloudPattern01ToPool;
+    public GameObject cloudPattern02ToPool;
+    public GameObject cloudPattern03ToPool;
+    public int amountCloudPatternsToPool;
+
     private void Awake()
     {
         SharedInstance = this;
@@ -80,6 +87,26 @@ public class ObjectPooler : MonoBehaviour
             slidePattern.transform.SetParent(this.transform);
             abducePattern.transform.SetParent(this.transform);
         }
+
+        pooledCloudPatterns = new List<GameObject>();
+        for (int i = 0; i < amountCloudPatternsToPool; i++)
+        {
+            GameObject cloudPattern01 = (GameObject)Instantiate(cloudPattern01ToPool);
+            GameObject cloudPattern02 = (GameObject)Instantiate(cloudPattern02ToPool);
+            GameObject cloudPattern03 = (GameObject)Instantiate(cloudPattern03ToPool);
+
+            cloudPattern01.SetActive(false);
+            cloudPattern02.SetActive(false);
+            cloudPattern03.SetActive(false);
+
+            pooledCloudPatterns.Add(cloudPattern01);
+            pooledCloudPatterns.Add(cloudPattern02);
+            pooledCloudPatterns.Add(cloudPattern03);
+
+            cloudPattern01.transform.SetParent(this.transform);
+            cloudPattern02.transform.SetParent(this.transform);
+            cloudPattern03.transform.SetParent(this.transform);
+        }
     }
 
     public GameObject GetPooledObstacle()
@@ -117,6 +144,19 @@ public class ObjectPooler : MonoBehaviour
             if (!pooledCoinPatterns[i].activeInHierarchy)
             {
                 return pooledCoinPatterns[i];
+            }
+        }
+
+        return null;
+    }
+
+    public GameObject GetPooledCloudPattern()
+    {
+        for (int i = 0; i < pooledCloudPatterns.Count; i++)
+        {
+            if (!pooledCloudPatterns[i].activeInHierarchy)
+            {
+                return pooledCloudPatterns[i];
             }
         }
 

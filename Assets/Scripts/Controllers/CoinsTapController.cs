@@ -20,7 +20,7 @@ public class CoinsTapController : MonoBehaviour
 
     void Update()
     {
-        if (Input.touchCount > 0 || Input.GetMouseButtonDown(0))
+        if (Input.touchCount > 0 || Input.GetMouseButtonDown(0)) // and bool isSlowMotion
         {
             //Ray raycast = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);
             Ray raycast = Camera.main.ScreenPointToRay(Input.mousePosition);

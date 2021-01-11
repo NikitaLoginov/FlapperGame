@@ -8,6 +8,8 @@ TagManager:
   - Powerup
   - ScoreTrigger
   - CoinTapPattern
+  - Coin
+  - CloudPattern
   layers:
   - Default
   - TransparentFX

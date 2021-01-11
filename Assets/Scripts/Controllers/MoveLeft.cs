@@ -3,6 +3,7 @@
 public class MoveLeft : MonoBehaviour
 {
     float _leftBound = -30.0f;
+    float _leftCloudBound = -100f;
     GameManager _gameManager;
     SpeedManager _speedManager;
 
@@ -17,7 +18,7 @@ public class MoveLeft : MonoBehaviour
     {
         if (!_gameManager.IsGameOver)
         { 
-            MoveLeftWithSpeed(_speedManager.Speed);
+            MoveLeftWithSpeed();
             TurnOffIfOutOfBounds();
         }
     }
@@ -36,30 +37,35 @@ public class MoveLeft : MonoBehaviour
         {
             gameObject.SetActive(false);
         }
-        //if (transform.position.x < _leftBound)
-        //{
-        //    gameObject.SetActive(false);
-        //}
+        else if (transform.position.x < _leftCloudBound && gameObject.CompareTag("CloudPattern"))
+        {
+            gameObject.SetActive(false);
+        }
     }
 
-    public void MoveLeftWithSpeed(float movementSpeed)
+    public void MoveLeftWithSpeed()
     {
         if (gameObject.CompareTag("Obstacle"))
         {
-            transform.Translate(Vector3.back * Time.deltaTime * movementSpeed);
+            transform.Translate(Vector3.back * Time.deltaTime * _speedManager.Speed);
         }
-        //else
-        //{
-        //    transform.Translate(Vector3.left * Time.deltaTime * movementSpeed);
-        //}
         else if (gameObject.CompareTag("Powerup"))
         {
-            transform.Translate(Vector3.left * Time.deltaTime * movementSpeed);
+            MoveObject(_speedManager.Speed);
         }
         else if (gameObject.CompareTag("CoinTapPattern"))
         {
-            transform.Translate(Vector3.left * Time.deltaTime * movementSpeed);
+            MoveObject(_speedManager.Speed);
         }
+        else if (gameObject.CompareTag("CloudPattern"))
+        {
+            MoveObject(_speedManager.CloudSpeed);
+        }
+    }
+
+    void MoveObject(float movementSpeed)
+    {
+        transform.Translate(Vector3.left * Time.deltaTime * movementSpeed);
     }
 
 }
