@@ -98,7 +98,7 @@ public class PowerupButton : MonoBehaviour
 
         if (_invincibilityManager.IsInsideObstacle)
         {
-            StartCoroutine(CheckIfNotInObstacle(0.1f));
+            //StartCoroutine(CheckIfNotInObstacle(0.1f));
         }
         else
         { 

@@ -177,6 +177,11 @@ public class GameManager : MonoBehaviour
             {
                 pooledObstacle.SetActive(true);
                 pooledObstacle.transform.position = _spawnPos;
+
+                for (int i = 0; i < pooledObstacle.transform.childCount; i++)
+                {
+                    pooledObstacle.transform.GetChild(i).gameObject.SetActive(true);
+                }
             }
         }
     }
@@ -208,7 +213,7 @@ public class GameManager : MonoBehaviour
             yield return new WaitForSeconds(_coinsSpawnRate * _difficultyManager.DifficultyModifier);
 
 
-            Vector3 spawnCoinsPosition = new Vector3(12, 0, 0); //reconfigure hard coded values!
+            Vector3 spawnCoinsPosition = new Vector3(12, -2.5f, 0); //reconfigure hard coded values!
 
             GameObject pooledCoinsPattern = ObjectPooler.SharedInstance.GetPooledCoinPattern();
             if (pooledCoinsPattern != null)
@@ -229,7 +234,7 @@ public class GameManager : MonoBehaviour
     {
         while (!_isGameOver)
         {
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(.5f);
 
             Vector3 spawnCloudsPos = new Vector3(100, 0, 0);
 

@@ -115,24 +115,27 @@ public class PlayerController : MonoBehaviour
         _gameOverPos = transform.position;
         if (collision.gameObject.CompareTag("Obstacle") && !_invincibilityManager.IsInvincible)
         {
-            Debug.Log("Game over!");
+            //Game Over!
             EventBroker.CallGameOver();
         }
         else if (collision.gameObject.CompareTag("Obstacle") && _invincibilityManager.IsInvincible)
         {
-            _invincibilityManager.IsInsideObstacle = true;
-            Debug.Log("Is inside obstacle: "+_invincibilityManager.IsInsideObstacle);
+            //_invincibilityManager.IsInsideObstacle = true;
+            //Debug.Log("Is inside obstacle: "+_invincibilityManager.IsInsideObstacle);
+
+            //play destruction animation
+            collision.gameObject.SetActive(false);
         }
     }
 
-    private void OnCollisionExit(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Obstacle"))
-        { 
-            _invincibilityManager.IsInsideObstacle = false;
-            Debug.Log("Is inside obstacle: " + _invincibilityManager.IsInsideObstacle);
-        }
-    }
+    //private void OnCollisionExit(Collision collision)
+    //{
+    //    if (collision.gameObject.CompareTag("Obstacle"))
+    //    { 
+    //        _invincibilityManager.IsInsideObstacle = false;
+    //        Debug.Log("Is inside obstacle: " + _invincibilityManager.IsInsideObstacle);
+    //    }
+    //}
 
     private void OnTriggerEnter(Collider other)
     {
