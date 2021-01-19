@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class CoinsTapController : MonoBehaviour
 {
-
-    List<Transform> _coins = new List<Transform>();
-    int _pointsForCoin = 1;
+    private List<Transform> _coins = new List<Transform>();
+    private int _pointsForCoin = 1;
 
     private void Start()
     {
@@ -18,7 +17,7 @@ public class CoinsTapController : MonoBehaviour
     }
 
 
-    void Update()
+    private void Update()
     {
         if (Input.touchCount > 0 || Input.GetMouseButtonDown(0)) // and bool isSlowMotion
         {

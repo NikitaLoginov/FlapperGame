@@ -35,7 +35,8 @@ public class ObjectPooler : MonoBehaviour
     {
         SharedInstance = this;
     }
-    void Start()
+
+    private void Start()
     {
         //Loop through list of pooled objects deactivating them and adding them to the list
         pooledObstacles = new List<GameObject>();
@@ -164,7 +165,7 @@ public class ObjectPooler : MonoBehaviour
     }
 
     //Calculates probability of spawning different types of powerups
-    int SimpleDiceRoller()
+    private int SimpleDiceRoller()
     {
         float randValue = Random.value;
 

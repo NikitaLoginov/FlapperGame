@@ -5,25 +5,25 @@ using UnityEngine.EventSystems;
 public class PlayerController : MonoBehaviour
 {
     //Gravity
-    [SerializeField]float _verticalThrust = 8;
-    [SerializeField]float _gravityModifier = 2f;
-    [SerializeField]float _maxSpeed = 11; //magnitude
-    const float _gravityConstant = 9.81f;
+    [SerializeField] private float _verticalThrust = 8;
+    [SerializeField] private float _gravityModifier = 2f;
+    [SerializeField] private float _maxSpeed = 11; //magnitude
+    private const float _gravityConstant = 9.81f;
 
     //Input
-    bool _canMove;
+    private bool _canMove;
 
-    int _pointValue = 1;
-    int _regularCoinValue = 1;
-    Rigidbody _playerRb;
-    Vector3 _gameOverPos;
-    Vector3 _continuePos;
+    private int _pointValue = 1;
+    private int _regularCoinValue = 1;
+    private Rigidbody _playerRb;
+    private Vector3 _gameOverPos;
+    private Vector3 _continuePos;
     
     //Managers
-    InvincibilityManager _invincibilityManager;
+    private InvincibilityManager _invincibilityManager;
 
 
-    void Start()
+    private void Start()
     {
         _playerRb = GetComponent<Rigidbody>();
         _invincibilityManager = GameObject.Find("InvincibilityManager").GetComponent<InvincibilityManager>();
@@ -62,7 +62,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         ApplyForce();
         CalculateVelocity();
@@ -78,7 +78,7 @@ public class PlayerController : MonoBehaviour
         if (!_invincibilityManager.IsInvincible)
         {
             //Applying constant force to bird to simulate gravity
-            _playerRb.AddForce(Vector3.down * _gravityConstant * _gravityModifier, ForceMode.Force);
+            _playerRb.AddForce(Vector3.down * (_gravityConstant * _gravityModifier), ForceMode.Force); //changed multiplication order paranteces
 
             //Bird goes up by tapping the screen or pushing a button
             //Checking for input
@@ -120,22 +120,10 @@ public class PlayerController : MonoBehaviour
         }
         else if (collision.gameObject.CompareTag("Obstacle") && _invincibilityManager.IsInvincible)
         {
-            //_invincibilityManager.IsInsideObstacle = true;
-            //Debug.Log("Is inside obstacle: "+_invincibilityManager.IsInsideObstacle);
-
-            //play destruction animation
-            collision.gameObject.SetActive(false);
+            //destruction animation
+            collision.collider.gameObject.SetActive(false); // turns off whole obstacle
         }
     }
-
-    //private void OnCollisionExit(Collision collision)
-    //{
-    //    if (collision.gameObject.CompareTag("Obstacle"))
-    //    { 
-    //        _invincibilityManager.IsInsideObstacle = false;
-    //        Debug.Log("Is inside obstacle: " + _invincibilityManager.IsInsideObstacle);
-    //    }
-    //}
 
     private void OnTriggerEnter(Collider other)
     {
@@ -148,7 +136,6 @@ public class PlayerController : MonoBehaviour
         }
         else if (other.gameObject.CompareTag("Powerup"))
         {
-            Debug.Log(other.gameObject.name);
             // set powerup button active
             if (other.gameObject.name == "Dash(Clone)")
             {

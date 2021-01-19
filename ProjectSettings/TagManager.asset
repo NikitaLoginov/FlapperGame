@@ -10,6 +10,8 @@ TagManager:
   - CoinTapPattern
   - Coin
   - CloudPattern
+  - Lower
+  - Upper
   layers:
   - Default
   - TransparentFX

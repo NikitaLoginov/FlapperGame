@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class TimeManager : MonoBehaviour
 {
-    float _slowdownFactor = 0.05f;
-    float _slowMotionLength = 3f;
-    bool _isTimeStoped;
+    private float _slowdownFactor = 0.05f;
+    private float _slowMotionLength = 3f;
+    private bool _isTimeStoped;
 
 
-    void Update()
+    private void Update()
     {
         if (!_isTimeStoped)
         { 

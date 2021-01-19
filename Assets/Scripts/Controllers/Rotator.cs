@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class Rotator : MonoBehaviour
 {
-    float _rotationSpeed = 50f;
-    void Update()
+    private float _rotationSpeed = 50f;
+
+    private void Update()
     {
-        transform.Rotate(new Vector3(0, 1,0) * Time.deltaTime * _rotationSpeed); 
+        transform.Rotate(new Vector3(0, 1,0) * (Time.deltaTime * _rotationSpeed)); 
     }
 }

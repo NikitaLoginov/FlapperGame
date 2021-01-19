@@ -6,40 +6,41 @@ using TMPro;
 public class GameManager : MonoBehaviour
 {
     //Player
-    [SerializeField] GameObject player;
-    DifficultyManager _difficultyManager;
-    TimeManager _timeManager;
-    SpeedManager _speedManager;
+    [SerializeField] private GameObject player;
+    private DifficultyManager _difficultyManager;
+    private TimeManager _timeManager;
+    private SpeedManager _speedManager;
 
     //UI
-    [SerializeField] TextMeshProUGUI scoreText;
-    [SerializeField] GameObject titleScreen;
-    [SerializeField] GameObject gameOverScreen;
-    [SerializeField] GameObject powerupManager;
-    [SerializeField] GameObject forwardDashButton;
-    [SerializeField] GameObject tapTheScreenText;
+    [SerializeField] private TextMeshProUGUI scoreText;
+    [SerializeField] private GameObject titleScreen;
+    [SerializeField] private GameObject gameOverScreen;
+    [SerializeField] private GameObject powerupManager;
+    [SerializeField] private GameObject forwardDashButton;
+    [SerializeField] private GameObject tapTheScreenText;
     public GameObject ForwardDashButton { get { return forwardDashButton; } }
-    [SerializeField] GameObject slowMotionButton;
+    [SerializeField] private GameObject slowMotionButton;
     public GameObject SlowMotionButton { get { return slowMotionButton; } }
-    [SerializeField] GameObject invincibilityButton;
+    [SerializeField] private GameObject invincibilityButton;
     public GameObject InvincibilityButton { get { return invincibilityButton; } }
 
     //Variables
-    bool _isGameOver;
+    private bool _isGameOver;
     public bool IsGameOver { get { return _isGameOver; } }
-    int _score;
-    int _continuesLeft = 3;
+    private int _score;
+    private int _continuesLeft = 3;
 
     //Spawn
-    Vector3 _spawnPos;
-    int _ySpawnPos;
-    float _spawnRate = 5f;
+    private Vector3 _spawnPos;
+    private float _ySpawnPos;
+    private float _spawnRate = 5f;
 
-    Vector3 _spawnPowerupPos;
-    int _xPowerupSpawnPos;
-    int _yPowerupSpawnPos;
-    float _powerupSpawnRate;
-    float _coinsSpawnRate = 5f;
+    private Vector3 _spawnPowerupPos;
+    private int _xPowerupSpawnPos;
+    private int _yPowerupSpawnPos;
+
+    private float _powerupSpawnRate;
+    //float _coinsSpawnRate = 5f;
 
     public void CanStartGame()
     {
@@ -83,7 +84,7 @@ public class GameManager : MonoBehaviour
         
         //Coroutines
         StartCoroutine(SpawnObstacle());
-        StartCoroutine(SpawnPowerup());
+        StartCoroutine(SpawnPowerups());
         StartCoroutine(SpawnCoins());
         StartCoroutine(SpawnClouds());
 
@@ -106,13 +107,13 @@ public class GameManager : MonoBehaviour
         forwardDashButton.gameObject.SetActive(true);
     }
 
-    void UpdateScore(int scoreToAdd)
+    private void UpdateScore(int scoreToAdd)
     {
         _score += scoreToAdd;
         scoreText.text = "Score: " + _score;
     }
 
-    void GameOver()
+    private void GameOver()
     {
         _isGameOver = true;
         gameOverScreen.gameObject.SetActive(true);
@@ -129,17 +130,18 @@ public class GameManager : MonoBehaviour
         _timeManager.StopTime(false);
 
         _continuesLeft--;
+        
         //Show ad
         if (_continuesLeft < 1)
             gameOverScreen.transform.GetChild(2).gameObject.SetActive(false);
 
         StartCoroutine(SpawnObstacle());
-        StartCoroutine(SpawnPowerup());
+        StartCoroutine(SpawnPowerups());
         StartCoroutine(SpawnCoins());
         StartCoroutine(SpawnClouds());
     }
 
-    void PowerupButtonsOn(bool isOn)
+    private void PowerupButtonsOn(bool isOn)
     {
         forwardDashButton.gameObject.SetActive(isOn);
         slowMotionButton.gameObject.SetActive(isOn);
@@ -147,7 +149,7 @@ public class GameManager : MonoBehaviour
     }
 
     //Restarting scene and unsubscribing from events here
-    void RestartGame()
+    private void RestartGame()
     {
         EventBroker.UpdateScoreHandler -= UpdateScore;
 
@@ -163,13 +165,13 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
-    IEnumerator SpawnObstacle()
+    private IEnumerator SpawnObstacle()
     {
         while (!_isGameOver)
         {
             yield return new WaitForSeconds(_spawnRate * _difficultyManager.DifficultyModifier);
 
-            _ySpawnPos = Random.Range(-3, 10);
+            _ySpawnPos = Random.Range(1, 10); //-3, 10
             _spawnPos = new Vector3(20, _ySpawnPos, 0);
 
             GameObject pooledObstacle = ObjectPooler.SharedInstance.GetPooledObstacle();
@@ -180,13 +182,19 @@ public class GameManager : MonoBehaviour
 
                 for (int i = 0; i < pooledObstacle.transform.childCount; i++)
                 {
-                    pooledObstacle.transform.GetChild(i).gameObject.SetActive(true);
+                    Transform child = pooledObstacle.transform.GetChild(i);
+                    //we need one more loop since we trying to reference a grandchild object
+                    for (int j = 0; j < child.transform.childCount; j++)
+                    {
+                        child.transform.GetChild(j).gameObject.SetActive(true);
+                    }
+                    
                 }
             }
         }
     }
 
-    IEnumerator SpawnPowerup()
+    private IEnumerator SpawnPowerups()
     {
         while (!_isGameOver)
         {
@@ -206,11 +214,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    IEnumerator SpawnCoins()
+    private IEnumerator SpawnCoins()
     {
         while (!_isGameOver)
         {
-            yield return new WaitForSeconds(_coinsSpawnRate * _difficultyManager.DifficultyModifier);
+            yield return new WaitForSeconds(_spawnRate * _difficultyManager.DifficultyModifier);
 
 
             Vector3 spawnCoinsPosition = new Vector3(12, -2.5f, 0); //reconfigure hard coded values!
@@ -230,7 +238,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    IEnumerator SpawnClouds()
+    private IEnumerator SpawnClouds()
     {
         while (!_isGameOver)
         {
@@ -255,9 +263,9 @@ public class GameManager : MonoBehaviour
     {
         float randomValue = Random.value;
         if (randomValue > .50)
-            return 6f;
+            return 15f;
         else
-            return 8f;
+            return 20f;
     }
 
 }

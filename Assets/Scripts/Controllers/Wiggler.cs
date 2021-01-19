@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class Wiggler : MonoBehaviour
 {
-    float yPos;
-    float yOrig;
+    private float yPos;
+    private float yOrig;
 
-    float top;
-    float bot;
+    private float top;
+    private float bot;
 
-    float speed = 0.8f;
+    private float speed = 0.8f;
 
-    Vector3 newPosition;
+    private Vector3 newPosition;
 
     private void Start()
     {
@@ -23,7 +23,7 @@ public class Wiggler : MonoBehaviour
         newPosition = new Vector3(0,1,0);
     }
 
-    void Update()
+    private void Update()
     {
         yPos = transform.position.y;
 

@@ -4,9 +4,10 @@ using TMPro;
 
 public class TapTheScreen : MonoBehaviour
 {
-    Button tapTheScreenButton;
-    GameManager gameManager;
-    void Start()
+    private Button tapTheScreenButton;
+    private GameManager gameManager;
+
+    private void Start()
     {
         tapTheScreenButton = GetComponent<Button>();
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
@@ -14,7 +15,7 @@ public class TapTheScreen : MonoBehaviour
         tapTheScreenButton.onClick.AddListener(StartGame);
     }
 
-    void StartGame()
+    private void StartGame()
     {
         gameManager.StartGame();
     }

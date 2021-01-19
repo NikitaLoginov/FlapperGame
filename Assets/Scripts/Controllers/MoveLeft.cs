@@ -2,19 +2,19 @@
 
 public class MoveLeft : MonoBehaviour
 {
-    float _leftBound = -30.0f;
-    float _leftCloudBound = -100f;
-    GameManager _gameManager;
-    SpeedManager _speedManager;
+    private float _leftBound = -30.0f;
+    private float _leftCloudBound = -100f;
+    private GameManager _gameManager;
+    private SpeedManager _speedManager;
 
-    void Start()
+    private void Start()
     {
         _speedManager = GameObject.Find("SpeedManager").GetComponent<SpeedManager>();
         _gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
 
-    void Update()
+    private void Update()
     {
         if (!_gameManager.IsGameOver)
         { 
@@ -47,7 +47,7 @@ public class MoveLeft : MonoBehaviour
     {
         if (gameObject.CompareTag("Obstacle"))
         {
-            transform.Translate(Vector3.back * Time.deltaTime * _speedManager.Speed);
+            transform.Translate(Vector3.back * (Time.deltaTime * _speedManager.Speed));
         }
         else if (gameObject.CompareTag("Powerup"))
         {
@@ -63,9 +63,9 @@ public class MoveLeft : MonoBehaviour
         }
     }
 
-    void MoveObject(float movementSpeed)
+    private void MoveObject(float movementSpeed)
     {
-        transform.Translate(Vector3.left * Time.deltaTime * movementSpeed);
+        transform.Translate(Vector3.left * (Time.deltaTime * movementSpeed));
     }
 
 }

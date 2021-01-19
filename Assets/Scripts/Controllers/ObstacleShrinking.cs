@@ -1,51 +1,55 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
-public class ObstacleShrinking : MonoBehaviour
+public class ObstacleShrinking : MonoBehaviour, IShrinkable
 {
-    GameObject _lowerObstacle;
-    GameObject _upperObstacle;
+    private GameObject _lowerObstacle;
+    private GameObject _upperObstacle;
 
-    public Transform LowerObstacle { get { return _lowerObstacle.transform; } }
-    public Transform UpperObstacle { get { return _upperObstacle.transform; } }
+    private float _minGap = 4.0f;
+    private float _narrowingSpeed = 4f; // adjust speed to make closing the gap look good
 
-    float _minGap = 30f;
-    float _gapModifier = 1f;
-    float _narrowingSpeed = 4f; // adjust speed to make closing the gap look good
+    private Vector3 _lowerObstaclePos;
+    private Vector3 _upperObstaclePos;
 
-    bool _canShrink;
+    private bool _canShrink;
     public bool CanShrink { set { _canShrink = value; } }
 
-    void Awake()
+    private void Awake()
     {
-        _upperObstacle = transform.GetChild(0).gameObject;
-        _lowerObstacle = transform.GetChild(1).gameObject;
+        _upperObstacle = transform.GetChild(1).gameObject;
+        _lowerObstacle = transform.GetChild(0).gameObject;
     }
 
     private void Update()
     {
         if (CanNarrowGap() && _canShrink)
+        {
             NarrowTheGap();
+        } 
     }
 
-
-    void NarrowTheGap()
+    public void NarrowTheGap()
     {
-        _lowerObstacle.transform.position = Vector3.MoveTowards(_lowerObstacle.transform.position, new Vector3(
-                _lowerObstacle.transform.position.x, (_lowerObstacle.transform.position.y + _gapModifier), _lowerObstacle.transform.position.z),(_narrowingSpeed * Time.deltaTime));
-
-        _upperObstacle.transform.position = Vector3.MoveTowards(_upperObstacle.transform.position, new Vector3(
-                _upperObstacle.transform.position.x, (_upperObstacle.transform.position.y - _gapModifier), _upperObstacle.transform.position.z),(_narrowingSpeed * Time.deltaTime));
+        float step = _narrowingSpeed * Time.deltaTime;
+        
+        _lowerObstacle.transform.position = Vector3.MoveTowards(_lowerObstaclePos,_upperObstaclePos,step);
+        
+        _upperObstacle.transform.position = Vector3.MoveTowards(_upperObstaclePos, _lowerObstaclePos, step);
     }
 
-    bool CanNarrowGap()
+    //works pretty well
+    private bool CanNarrowGap()
     {
-        float lowerBound = _lowerObstacle.transform.position.y;
-        float upperBound = _upperObstacle.transform.position.y;
-        float gapValue = Mathf.Abs(lowerBound) + Mathf.Abs(upperBound);
-
+        //important for position to be defined dynamically for each objects since they are coming and going from the scene
+        //and otherwise it could mess up links to them.
+        _lowerObstaclePos = _lowerObstacle.transform.position;
+        _upperObstaclePos = _upperObstacle.transform.position;
+        
+        float gapValue = (_lowerObstaclePos - _upperObstaclePos).magnitude;
+        
         if (gapValue < _minGap)
             return false;
-        else
-            return true;
+        return true;
     }
 }

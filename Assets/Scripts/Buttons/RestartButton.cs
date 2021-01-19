@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class RestartButton : MonoBehaviour
 {
-    Button _restartButton;
+    private Button _restartButton;
 
     private void Start()
     {
@@ -12,7 +12,7 @@ public class RestartButton : MonoBehaviour
         _restartButton.onClick.AddListener(Restart);
     }
 
-    void Restart()
+    private void Restart()
     {
         EventBroker.CallRestartGame();
     }

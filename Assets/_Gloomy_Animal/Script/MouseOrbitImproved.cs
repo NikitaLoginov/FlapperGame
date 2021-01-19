@@ -24,10 +24,10 @@ public class MouseOrbitImproved : MonoBehaviour {
 	private GameObject TargetGO;
 	
 	public float x = 0.0f;
-	float y = 0.0f;
+	private float y = 0.0f;
 	
 	// Use this for initialization
-	void Start () 
+	private void Start () 
 	{
 		Vector3 angles = transform.eulerAngles;
 		x = angles.y;
@@ -59,7 +59,7 @@ public class MouseOrbitImproved : MonoBehaviour {
 		return dest;
 	}
 
-	void LateUpdate () 
+	private void LateUpdate () 
 	{
 		Vector3 tgt = GetTarget();
 
