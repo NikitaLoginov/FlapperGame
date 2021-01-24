@@ -18,12 +18,6 @@ public class SpeedManager : MonoBehaviour
         _speed = startSpeed;
         _normalSpeed = startSpeed;
     }
-
-    //should run when difficulty is rising
-    private void UpdateSpeed()
-    {
-    }
-
     public void NormaliseSpeed()
     {
         Speed = _normalSpeed;

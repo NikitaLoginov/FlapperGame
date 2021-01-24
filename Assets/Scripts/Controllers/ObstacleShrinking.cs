@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class ObstacleShrinking : MonoBehaviour, IShrinkable
+public class ObstacleShrinking : MonoBehaviour
 {
     private GameObject _lowerObstacle;
     private GameObject _upperObstacle;

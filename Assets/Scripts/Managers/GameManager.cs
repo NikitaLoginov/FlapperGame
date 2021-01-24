@@ -254,7 +254,7 @@ public class GameManager : MonoBehaviour
                 pooledCouldsPatter.transform.position = spawnCloudsPos;
             }
 
-            yield return new WaitForSeconds(28f);
+            yield return new WaitForSeconds(28f); //magic number is a spawn rate of clouds which is constant throughout the game
         }
     }
 

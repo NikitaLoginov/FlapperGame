@@ -45,6 +45,9 @@ public class DifficultyManager : MonoBehaviour
             _upper = _upper - 1f;
             _difficultyModifier -= _difficultyRaise; // 1-= 0.02
             
+            //by dividing speed by difficulty coefficient we make so that speed rises in sync with difficulty
+            _speedManager.Speed /= _difficultyModifier;
+            
             foreach (var shrinker in _shrinkers)
             {
                 shrinker.CanShrink = true;
