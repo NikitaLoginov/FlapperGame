@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class MoveLeft : MonoBehaviour
 {
@@ -7,13 +6,15 @@ public class MoveLeft : MonoBehaviour
     private float _leftCloudBound = -100f;
     private GameManager _gameManager;
     private SpeedManager _speedManager;
-    private Transform objTransform;
+    private Transform _objTransform;
+    private string _gameObjectTag;
 
     private void Start()
     {
         _speedManager = GameObject.Find("SpeedManager").GetComponent<SpeedManager>();
         _gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-        objTransform = transform;
+        _objTransform = transform;
+        _gameObjectTag = gameObject.tag;
     }
 
 
@@ -21,7 +22,7 @@ public class MoveLeft : MonoBehaviour
     {
         if (!_gameManager.IsGameOver)
         { 
-            Vector3 objPosition = objTransform.position;
+            Vector3 objPosition = _objTransform.position;
             
             MoveLeftWithSpeed();
             TurnOffIfOutOfBounds(objPosition);
@@ -30,35 +31,36 @@ public class MoveLeft : MonoBehaviour
 
     private void TurnOffIfOutOfBounds(Vector3 objPosition)
     {
-        if (IsOutOfBounds("Obstacle", objPosition) || IsOutOfBounds("Powerup",objPosition) || IsOutOfBounds("CoinTapPattern",objPosition))
+        switch (_gameObjectTag)
         {
-            gameObject.SetActive(false);
+            case "Obstacle":
+                gameObject.SetActive(!(objPosition.x < _leftBound && gameObject.CompareTag(_gameObjectTag)));
+                break;
+            case "Powerup":
+                gameObject.SetActive(!(objPosition.x < _leftBound && gameObject.CompareTag(_gameObjectTag)));
+                break;
+            case "CoinTapPattern":
+                gameObject.SetActive(!(objPosition.x < _leftBound && gameObject.CompareTag(_gameObjectTag)));
+                break;
+            case "CloudPattern":
+                gameObject.SetActive(!(objPosition.x < _leftCloudBound && gameObject.CompareTag(_gameObjectTag)));
+                break;
         }
-        else if (objPosition.x < _leftCloudBound && gameObject.CompareTag("CloudPattern"))
-        {
-            gameObject.SetActive(false);
-        }
-    }
-
-    bool IsOutOfBounds(string tag, Vector3 objPosition)
-    {
-        bool outOfBouds = objPosition.x < _leftBound;
-        return outOfBouds && gameObject.CompareTag(tag);
     }
 
     public void MoveLeftWithSpeed()
     {
-        if (gameObject.CompareTag("Obstacle"))
+        switch (_gameObjectTag)
         {
-            transform.Translate(Vector3.back * (Time.deltaTime * _speedManager.Speed));
-        }
-        else if (gameObject.CompareTag("Powerup") || gameObject.CompareTag("CoinTapPattern"))
-        {
-            MoveObject(_speedManager.Speed);
-        }
-        else if (gameObject.CompareTag("CloudPattern"))
-        {
-            MoveObject(_speedManager.CloudSpeed);
+            case "Obstacle":
+                _objTransform.Translate(Vector3.back * (Time.deltaTime * _speedManager.Speed));
+                break;
+            case "CloudPattern":
+                MoveObject(_speedManager.CloudSpeed);
+                break;
+            default:
+                MoveObject(_speedManager.Speed);
+                break; 
         }
     }
 
