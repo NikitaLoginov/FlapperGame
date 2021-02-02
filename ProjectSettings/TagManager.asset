@@ -12,6 +12,8 @@ TagManager:
   - CloudPattern
   - Lower
   - Upper
+  - CoinPattern
+  - BCoin
   layers:
   - Default
   - TransparentFX

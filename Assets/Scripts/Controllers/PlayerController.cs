@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour
 
     private int _pointValue = 1;
     private int _regularCoinValue = 1;
+    private int _bigCoinValue = 10;
     private Rigidbody _playerRb;
     private Vector3 _gameOverPos;
     private Vector3 _continuePos;
@@ -70,8 +71,6 @@ public class PlayerController : MonoBehaviour
 
     private void ApplyForce()
     {
-        //if (!gameManager.isGameOver) - old implementation
-
         // Instead of using property to check if game is over we instead are using event subscribtion to check it.
         // When game is over we unsubscribe from event which in turn make else part start working
         // You probably should test this somehow!
@@ -159,6 +158,11 @@ public class PlayerController : MonoBehaviour
         {
             other.gameObject.SetActive(false);
             EventBroker.CallUpdateScore(_regularCoinValue);
+        }
+        else if (other.gameObject.CompareTag("BCoin"))
+        {
+            other.gameObject.SetActive(false);
+            EventBroker.CallUpdateScore(_bigCoinValue);
         }
     }
 

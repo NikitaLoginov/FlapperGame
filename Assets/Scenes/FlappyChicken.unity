@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 170076734}
-  m_IndirectSpecularColor: {r: 0.47882336, g: 0.8001769, b: 0.9007291, a: 1}
+  m_IndirectSpecularColor: {r: 0.4723423, g: 0.8014174, b: 0.8965855, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -423,7 +423,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 7.163e-42, y: 1.01e-43, z: 0, w: 0}
+  m_BoundingSphereOverride: {x: 4.5905e-41, y: 0, z: 0, w: NaN}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -1857,6 +1857,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3539963326034914725, guid: c03588998e95a014b803dc5404f98cf4,
         type: 3}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3539963326034914725, guid: c03588998e95a014b803dc5404f98cf4,
+        type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.5
       objectReference: {fileID: 0}
@@ -1872,6 +1877,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3539963326034914725, guid: c03588998e95a014b803dc5404f98cf4,
         type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 3539963326034914725, guid: c03588998e95a014b803dc5404f98cf4,
+        type: 3}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
@@ -1884,16 +1894,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalRotation.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3539963326034914725, guid: c03588998e95a014b803dc5404f98cf4,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 3539963326034914725, guid: c03588998e95a014b803dc5404f98cf4,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3539963326034914725, guid: c03588998e95a014b803dc5404f98cf4,
         type: 3}
@@ -3412,11 +3412,11 @@ MonoBehaviour:
     type: 3}
   amountPowerupsToPool: 1
   pooledCoinPatterns: []
-  tapPatterToPool: {fileID: 1431686830358438043, guid: 29624cfed42110f4c874c2ee1023f519,
+  trianglePatterToPool: {fileID: 1431686830358438043, guid: d2d45f5c231dfe64db2291e28ef082e7,
     type: 3}
-  slidePatternToPool: {fileID: 1431686830358438043, guid: 29624cfed42110f4c874c2ee1023f519,
+  rombPatternToPool: {fileID: 1431686830358438043, guid: d172a6df96d2d894ba32bf2e4312a5a5,
     type: 3}
-  abducePatternToPool: {fileID: 1431686830358438043, guid: 29624cfed42110f4c874c2ee1023f519,
+  bCoinPatternToPool: {fileID: 1431686830358438043, guid: 1b35db4160e2de74ebbf028b5bfb0bb1,
     type: 3}
   amountCoinPatternsToPool: 1
   pooledCloudPatterns: []

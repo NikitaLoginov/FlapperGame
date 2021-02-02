@@ -220,10 +220,9 @@ public class GameManager : MonoBehaviour
         {
             yield return new WaitForSeconds(_spawnRate * _difficultyManager.DifficultyModifier);
 
-
             Vector3 spawnCoinsPosition = new Vector3(12, -2.5f, 0); //reconfigure hard coded values!
 
-            GameObject pooledCoinsPattern = ObjectPooler.SharedInstance.GetPooledCoinPattern();
+            GameObject pooledCoinsPattern =ObjectPooler.SharedInstance.GetPooledCoinPattern();
             if (pooledCoinsPattern != null)
             {
                 pooledCoinsPattern.SetActive(true);
@@ -237,6 +236,7 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+
 
     private IEnumerator SpawnClouds()
     {

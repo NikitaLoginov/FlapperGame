@@ -17,7 +17,6 @@ public class MoveLeft : MonoBehaviour
         _gameObjectTag = gameObject.tag;
     }
 
-
     private void Update()
     {
         if (!_gameManager.IsGameOver)
@@ -39,7 +38,7 @@ public class MoveLeft : MonoBehaviour
             case "Powerup":
                 gameObject.SetActive(!(objPosition.x < _leftBound && gameObject.CompareTag(_gameObjectTag)));
                 break;
-            case "CoinTapPattern":
+            case "CoinPattern":
                 gameObject.SetActive(!(objPosition.x < _leftBound && gameObject.CompareTag(_gameObjectTag)));
                 break;
             case "CloudPattern":
@@ -48,7 +47,7 @@ public class MoveLeft : MonoBehaviour
         }
     }
 
-    public void MoveLeftWithSpeed()
+    private void MoveLeftWithSpeed()
     {
         switch (_gameObjectTag)
         {

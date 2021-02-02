@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class ObjectPooler : MonoBehaviour
 {
@@ -19,9 +20,9 @@ public class ObjectPooler : MonoBehaviour
 
     //Coins
     public List<GameObject> pooledCoinPatterns;
-    public GameObject tapPatterToPool;
-    public GameObject slidePatternToPool;
-    public GameObject abducePatternToPool;
+    [FormerlySerializedAs("tapPatterToPool")] public GameObject trianglePatterToPool;
+    [FormerlySerializedAs("slidePatternToPool")] public GameObject rombPatternToPool;
+    [FormerlySerializedAs("abducePatternToPool")] public GameObject bCoinPatternToPool;
     public int amountCoinPatternsToPool;
 
     //Clouds
@@ -72,9 +73,9 @@ public class ObjectPooler : MonoBehaviour
         pooledCoinPatterns = new List<GameObject>();
         for (int i = 0; i < amountCoinPatternsToPool; i++)
         {
-            GameObject tapPattern = (GameObject)Instantiate(tapPatterToPool);
-            GameObject slidePattern = (GameObject)Instantiate(slidePatternToPool);
-            GameObject abducePattern = (GameObject)Instantiate(abducePatternToPool);
+            GameObject tapPattern = (GameObject)Instantiate(trianglePatterToPool);
+            GameObject slidePattern = (GameObject)Instantiate(rombPatternToPool);
+            GameObject abducePattern = (GameObject)Instantiate(bCoinPatternToPool);
 
             tapPattern.SetActive(false);
             slidePattern.SetActive(false);
@@ -140,12 +141,17 @@ public class ObjectPooler : MonoBehaviour
 
     public GameObject GetPooledCoinPattern()
     {
+        float randomValue = Random.value;
         for (int i = 0; i < pooledCoinPatterns.Count; i++)
         {
-            if (!pooledCoinPatterns[i].activeInHierarchy)
-            {
+            if (pooledCoinPatterns[i].activeInHierarchy) continue;
+            if(randomValue < .40 && pooledCoinPatterns[i].name == "CoinPatternTriangle(Clone)")
                 return pooledCoinPatterns[i];
-            }
+            else if (randomValue > .40 && randomValue < .80 &&
+                     pooledCoinPatterns[i].name == "CoinPatternRomb(Clone)")
+                return pooledCoinPatterns[i];
+            else if (randomValue > .80 && pooledCoinPatterns[i].name == "CoinPatternBCoin(Clone)")
+                return pooledCoinPatterns[i];
         }
 
         return null;
