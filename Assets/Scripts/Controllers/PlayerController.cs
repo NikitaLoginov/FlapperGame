@@ -22,12 +22,18 @@ public class PlayerController : MonoBehaviour
     
     //Managers
     private InvincibilityManager _invincibilityManager;
+    
+    //Animation
+    private Animator _playerAnim;
+    private static readonly int Tapped = Animator.StringToHash("Tapped");
 
 
     private void Start()
     {
         _playerRb = GetComponent<Rigidbody>();
         _invincibilityManager = GameObject.Find("InvincibilityManager").GetComponent<InvincibilityManager>();
+
+        _playerAnim = GetComponent<Animator>();
 
         EventBroker.PlayerControllerContinueHandler += Continue;
 
@@ -52,7 +58,6 @@ public class PlayerController : MonoBehaviour
 
     private void CheckingTapInput()
     {
-
         if (Input.GetMouseButtonDown(0))
         {
             if (EventSystem.current.IsPointerOverGameObject())
@@ -60,6 +65,7 @@ public class PlayerController : MonoBehaviour
                 return;
             }
             _canMove = true;
+            _playerAnim.SetBool(Tapped, true);
         }
     }
 
@@ -85,11 +91,13 @@ public class PlayerController : MonoBehaviour
             {
                 _playerRb.AddForce(Vector3.up * _verticalThrust, ForceMode.Impulse);
                 _canMove = false;
+                _playerAnim.SetBool(Tapped, false);
             }
         }
         else if (_invincibilityManager.IsInvincible)
         {
             _playerRb.Sleep(); // to stop applying force
+            _playerAnim.SetBool(Tapped,true);
         }
         else
         {
