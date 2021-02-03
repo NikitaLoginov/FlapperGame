@@ -1,7 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
+using Random = UnityEngine.Random;
 
 public class ObjectPooler : MonoBehaviour
 {
@@ -23,6 +25,8 @@ public class ObjectPooler : MonoBehaviour
     [FormerlySerializedAs("tapPatterToPool")] public GameObject trianglePatterToPool;
     [FormerlySerializedAs("slidePatternToPool")] public GameObject rombPatternToPool;
     [FormerlySerializedAs("abducePatternToPool")] public GameObject bCoinPatternToPool;
+    public GameObject jumpCoinPatternToPool;
+    public GameObject lineCoinPatternToPool;
     public int amountCoinPatternsToPool;
 
     //Clouds
@@ -76,18 +80,26 @@ public class ObjectPooler : MonoBehaviour
             GameObject tapPattern = (GameObject)Instantiate(trianglePatterToPool);
             GameObject slidePattern = (GameObject)Instantiate(rombPatternToPool);
             GameObject abducePattern = (GameObject)Instantiate(bCoinPatternToPool);
+            GameObject linePattern = (GameObject) Instantiate(lineCoinPatternToPool);
+            GameObject jumpPattern = (GameObject) Instantiate(jumpCoinPatternToPool);
 
             tapPattern.SetActive(false);
             slidePattern.SetActive(false);
             abducePattern.SetActive(false);
+            linePattern.SetActive(false);
+            jumpPattern.SetActive(false);
 
             pooledCoinPatterns.Add(tapPattern);
             pooledCoinPatterns.Add(slidePattern);
             pooledCoinPatterns.Add(abducePattern);
+            pooledCoinPatterns.Add(linePattern);
+            pooledCoinPatterns.Add(jumpPattern);
 
             tapPattern.transform.SetParent(this.transform);
             slidePattern.transform.SetParent(this.transform);
             abducePattern.transform.SetParent(this.transform);
+            linePattern.transform.SetParent(this.transform);
+            jumpPattern.transform.SetParent(this.transform);
         }
 
         pooledCloudPatterns = new List<GameObject>();
@@ -141,20 +153,40 @@ public class ObjectPooler : MonoBehaviour
 
     public GameObject GetPooledCoinPattern()
     {
-        float randomValue = Random.value;
-        for (int i = 0; i < pooledCoinPatterns.Count; i++)
+        while (true)
         {
-            if (pooledCoinPatterns[i].activeInHierarchy) continue;
-            if(randomValue < .40 && pooledCoinPatterns[i].name == "CoinPatternTriangle(Clone)")
-                return pooledCoinPatterns[i];
-            else if (randomValue > .40 && randomValue < .80 &&
-                     pooledCoinPatterns[i].name == "CoinPatternRomb(Clone)")
-                return pooledCoinPatterns[i];
-            else if (randomValue > .80 && pooledCoinPatterns[i].name == "CoinPatternBCoin(Clone)")
-                return pooledCoinPatterns[i];
-        }
+            float randomValue = Random.value;
 
-        return null;
+            if (randomValue < .20)
+            {
+                GameObject trianglePattern = pooledCoinPatterns.Find(x => x.name.Contains("CoinPatternTriangle"));
+
+                if (!trianglePattern.activeInHierarchy) return trianglePattern;
+            }
+            else if (randomValue > .20 && randomValue < .40)
+            {
+                GameObject rombPattern = pooledCoinPatterns.Find(x => x.name.Contains("CoinPatternRomb"));
+
+                if (!rombPattern.activeInHierarchy) return rombPattern;
+            }
+            else if (randomValue > .40 && randomValue < .50)
+            {
+                GameObject bCoinPattern = pooledCoinPatterns.Find((x => x.name.Contains("CoinPatternBCoin")));
+
+                if (!bCoinPattern.activeInHierarchy) return bCoinPattern;
+            }
+            else if (randomValue > .50 && randomValue < .75)
+            {
+                GameObject linePattern = pooledCoinPatterns.Find(x => x.name.Contains("CoinPatternLine"));
+
+                if (!linePattern.activeInHierarchy) return linePattern;
+            }
+            else if (randomValue > .75)
+            {
+                GameObject jumpPattern = pooledCoinPatterns.Find(x => x.name.Contains("CoinPatternJump"));
+                if (!jumpPattern.activeInHierarchy) return jumpPattern;
+            }
+        }
     }
 
     public GameObject GetPooledCloudPattern()

@@ -3418,6 +3418,10 @@ MonoBehaviour:
     type: 3}
   bCoinPatternToPool: {fileID: 1431686830358438043, guid: 1b35db4160e2de74ebbf028b5bfb0bb1,
     type: 3}
+  jumpCoinPatternToPool: {fileID: 1431686830358438043, guid: aaa8a6d00248607468284307bef57318,
+    type: 3}
+  lineCoinPatternToPool: {fileID: 1431686830358438043, guid: b4d7721026e1e594d91b49df0d4d186b,
+    type: 3}
   amountCoinPatternsToPool: 1
   pooledCloudPatterns: []
   cloudPattern01ToPool: {fileID: 1387365988225721993, guid: 1918210b1bdf21844a0b1cf337582803,
