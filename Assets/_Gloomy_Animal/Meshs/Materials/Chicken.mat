@@ -8,7 +8,8 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Chicken
-  m_Shader: {fileID: 10752, guid: 0000000000000000f000000000000000, type: 0}
+  m_Shader: {fileID: -6465566751694194690, guid: 191a73a77c365c64aba707bd70a3dd53,
+    type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -19,6 +20,18 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - Texture2D_5452D1B9:
+        m_Texture: {fileID: 2800000, guid: e547b28e5e153fe44b3e55cecf6bdcc7, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_551B01BE:
+        m_Texture: {fileID: 2800000, guid: 10ecf69b18662c24eb78a01f59547300, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - Texture2D_CB5682A5:
+        m_Texture: {fileID: 2800000, guid: e547b28e5e153fe44b3e55cecf6bdcc7, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _BumpMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -73,5 +86,6 @@ Material:
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
+    - Color_5A4DBCF2: {r: 0.8392158, g: 0.7764707, b: 0.7450981, a: 1}
     - _Color: {r: 0.90196085, g: 0.90196085, b: 0.90196085, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}

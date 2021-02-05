@@ -13,6 +13,7 @@ public class MoveLeft : MonoBehaviour
     {
         _speedManager = GameObject.Find("SpeedManager").GetComponent<SpeedManager>();
         _gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        
         _objTransform = transform;
         _gameObjectTag = gameObject.tag;
     }

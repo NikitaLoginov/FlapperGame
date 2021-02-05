@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class StartButton : MonoBehaviour
@@ -13,11 +11,6 @@ public class StartButton : MonoBehaviour
         startButton = GetComponent<Button>();
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 
-        startButton.onClick.AddListener(CanStartGame);
-    }
-
-    private void CanStartGame()
-    {
-        gameManager.CanStartGame();
+        startButton.onClick.AddListener(gameManager.CanStartGame);
     }
 }

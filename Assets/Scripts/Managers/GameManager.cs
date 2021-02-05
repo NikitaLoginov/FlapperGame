@@ -1,7 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
+using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
 {
@@ -40,7 +42,14 @@ public class GameManager : MonoBehaviour
     private int _yPowerupSpawnPos;
 
     private float _powerupSpawnRate;
-    //float _coinsSpawnRate = 5f;
+
+    private void Awake()
+    {
+        _isGameOver = true;
+        
+        _difficultyManager = FindObjectOfType<DifficultyManager>();
+        _timeManager = FindObjectOfType<TimeManager>();
+    }
 
     public void CanStartGame()
     {
@@ -56,8 +65,6 @@ public class GameManager : MonoBehaviour
 
         player.gameObject.SetActive(true);
 
-        _difficultyManager = FindObjectOfType<DifficultyManager>();
-        _timeManager = FindObjectOfType<TimeManager>();
 
         _timeManager.StopTime(true);
     }
