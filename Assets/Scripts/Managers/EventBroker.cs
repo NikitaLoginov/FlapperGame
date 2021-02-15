@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class EventBroker : MonoBehaviour
 {
-    public static event Action PlayerControllerContinueHandler;
-    public static event Action ContinueGameHandler;
     public static event Action<int> UpdateScoreHandler;
     public static event Action DifficultyHandler;
 
@@ -15,18 +13,10 @@ public class EventBroker : MonoBehaviour
 
     public static event Action GameOverHandler;
     public static event Action RestartGameHandler;
+    public static event Action ShopButtonHandler;
+    public static event Action BackButtonHandler;
+    public static event Action StartButtonHadler;
 
-    public static void PlayerControllerCallContinue()
-    {
-        if (PlayerControllerContinueHandler != null)
-            PlayerControllerContinueHandler();
-    }
-
-    public static void CallContinueGame()
-    {
-        if (ContinueGameHandler != null)
-            ContinueGameHandler();
-    }
 
     public static void CallUpdateScore(int scoreValue)
     {
@@ -35,38 +25,47 @@ public class EventBroker : MonoBehaviour
     }
     public static void CallDifficultyModifier()
     {
-        if (DifficultyHandler != null)
-            DifficultyHandler();
+        DifficultyHandler?.Invoke();
+    }
+    public static void CallGameOver()
+    {
+        GameOverHandler?.Invoke();
     }
 
     //Buttons
     public static void CallForwardDash()
     {
-        if (ForwardDashHandler != null)
-            ForwardDashHandler();
+        ForwardDashHandler?.Invoke();
     }
 
     public static void CallSlowMotion()
     {
-        if (SlowMotionHandler != null)
-            SlowMotionHandler();
+        SlowMotionHandler?.Invoke();
     }
 
     public static void CallInvincibility()
     {
-        if (InvincibilityHandler != null)
-            InvincibilityHandler();
+        InvincibilityHandler?.Invoke();
     }
 
-    public static void CallGameOver()
-    {
-        if (GameOverHandler != null)
-            GameOverHandler();
-    }
 
     public static void CallRestartGame()
     {
-        if (RestartGameHandler != null)
-            RestartGameHandler();
+        RestartGameHandler?.Invoke();
+    }
+
+    public static void CallOnShopButtonPressed()
+    {
+        ShopButtonHandler?.Invoke();
+    }
+
+    public static void CallOnBackButtonPressed()
+    {
+        BackButtonHandler?.Invoke();
+    }
+
+    public static void CallOnStartButtonPressed()
+    {
+        StartButtonHadler?.Invoke();
     }
 }

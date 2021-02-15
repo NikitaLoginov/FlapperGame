@@ -35,20 +35,7 @@ public class PlayerController : MonoBehaviour
 
         _playerAnim = GetComponent<Animator>();
 
-        EventBroker.PlayerControllerContinueHandler += Continue;
-
         _continuePos = _playerRb.transform.position;
-    }
-
-    private void OnDisable()
-    {
-        EventBroker.PlayerControllerContinueHandler -= Continue;
-    }
-
-    public void Continue()
-    {
-        transform.position = _continuePos;
-        EventBroker.CallContinueGame();
     }
 
     private void Update()

@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/MainMenu.unity
+    guid: 96f56a142e36b894d9ef303efce0d5f8
+  - enabled: 1
     path: Assets/Scenes/FlappyChicken.unity
     guid: 9ee18ce8c25e8174695341c47eef4ab7
   m_configObjects: {}

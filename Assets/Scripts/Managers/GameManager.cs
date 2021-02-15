@@ -49,6 +49,7 @@ public class GameManager : MonoBehaviour
         
         _difficultyManager = FindObjectOfType<DifficultyManager>();
         _timeManager = FindObjectOfType<TimeManager>();
+        CanStartGame();
     }
 
     public void CanStartGame()
@@ -65,14 +66,10 @@ public class GameManager : MonoBehaviour
 
         player.gameObject.SetActive(true);
 
-
         _timeManager.StopTime(true);
     }
     public void StartGame()
     {
-        //UI
-        tapTheScreenText.gameObject.SetActive(false);
-
         //Variables
         _isGameOver = false;
 
@@ -84,7 +81,6 @@ public class GameManager : MonoBehaviour
         EventBroker.InvincibilityHandler += TurnOnInvincibilityButton; //On when getting powerup
 
         EventBroker.UpdateScoreHandler += UpdateScore;
-        EventBroker.ContinueGameHandler += ContinueGame;
 
         EventBroker.DifficultyHandler += _difficultyManager.ModifyDifficulty;
         _difficultyManager.CreateShrinkersList();
@@ -94,9 +90,13 @@ public class GameManager : MonoBehaviour
         StartCoroutine(SpawnPowerups());
         StartCoroutine(SpawnCoins());
         StartCoroutine(SpawnClouds());
+        
+        //UI
+        tapTheScreenText.gameObject.SetActive(false);
 
         UpdateScore(_score);
         _timeManager.StopTime(false);
+        
     }
 
     private void TurnOnInvincibilityButton()
@@ -158,6 +158,13 @@ public class GameManager : MonoBehaviour
     //Restarting scene and unsubscribing from events here
     private void RestartGame()
     {
+        Unsubscribe();
+
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    private void Unsubscribe()
+    {
         EventBroker.UpdateScoreHandler -= UpdateScore;
 
         EventBroker.DifficultyHandler -= _difficultyManager.ModifyDifficulty;
@@ -167,9 +174,6 @@ public class GameManager : MonoBehaviour
         EventBroker.ForwardDashHandler -= TurnOnDashButton; //On when getting powerup
         EventBroker.SlowMotionHandler -= TurnOnSlowMoButton; //On when getting powerup
         EventBroker.InvincibilityHandler -= TurnOnInvincibilityButton;
-        EventBroker.ContinueGameHandler -= ContinueGame;
-
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     private IEnumerator SpawnObstacle()
