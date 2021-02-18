@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 2100942530}
-  m_IndirectSpecularColor: {r: 0.063230164, g: 0.213031, b: 0.28180426, a: 1}
+  m_IndirectSpecularColor: {r: 0.20187347, g: 0.64617074, b: 0.8299141, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -384,7 +384,7 @@ Light:
   m_InnerSpotAngle: 21.802082
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 2
+    m_Type: 1
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 0.15
@@ -870,7 +870,6 @@ GameObject:
   - component: {fileID: 534669903}
   - component: {fileID: 534669906}
   - component: {fileID: 534669907}
-  - component: {fileID: 534669908}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -986,23 +985,6 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
---- !u!114 &534669908
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 534669902}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isGlobal: 1
-  priority: 0
-  blendDistance: 0
-  weight: 1
-  sharedProfile: {fileID: 11400000, guid: 44107fda746733b43a329d17f481fe23, type: 2}
 --- !u!1 &611550270
 GameObject:
   m_ObjectHideFlags: 0
@@ -2399,7 +2381,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1317939751
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3207,11 +3189,11 @@ MonoBehaviour:
     type: 3}
   amountObstaclesToPool: 3
   pooledPowerups: []
-  dashPowerupToPool: {fileID: 8091718508373407641, guid: 6eba0fdaf9a314553a9d91974897e755,
+  dashPowerupToPool: {fileID: 5580950876393184368, guid: c6a07058f7d0112448444017c2434f5d,
     type: 3}
-  slowMoPowerupToPool: {fileID: 2543276039559754591, guid: 8a649ec5ef72b40e3ba328c0f3d12560,
+  slowMoPowerupToPool: {fileID: 8655309343952043088, guid: 89a6c44e90e1c8648a465ae0e5542a4e,
     type: 3}
-  invincibilityPowerupToPool: {fileID: 3490307599929981216, guid: 4518e659df45f4165ab3426e0d176161,
+  invincibilityPowerupToPool: {fileID: 1564151664754559222, guid: f0fd0cadc3d9af44381a6f895bfaf814,
     type: 3}
   amountPowerupsToPool: 1
   pooledCoinPatterns: []
@@ -3567,7 +3549,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!108 &2100942530
 Light:
   m_ObjectHideFlags: 0
@@ -3685,52 +3667,4 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1473738980}
   m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &2118303064
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2118303066}
-  - component: {fileID: 2118303065}
-  m_Layer: 0
-  m_Name: PostProcessVolume
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &2118303065
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2118303064}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isGlobal: 1
-  priority: 0
-  blendDistance: 0
-  weight: 1
-  sharedProfile: {fileID: 11400000, guid: 2301d75f402b7e9449a1427bebf19ae1, type: 2}
---- !u!4 &2118303066
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2118303064}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

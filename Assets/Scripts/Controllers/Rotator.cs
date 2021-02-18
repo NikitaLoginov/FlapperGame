@@ -1,13 +1,17 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Rotator : MonoBehaviour
 {
     private float _rotationSpeed = 50f;
+    private Transform _transform;
+
+    private void Awake()
+    {
+        _transform = this.transform;
+    }
 
     private void Update()
     {
-        transform.Rotate(new Vector3(0, 1,0) * (Time.deltaTime * _rotationSpeed)); 
+        _transform.Rotate(new Vector3(0, 1,0) * (Time.deltaTime * _rotationSpeed)); 
     }
 }

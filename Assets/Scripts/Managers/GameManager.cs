@@ -30,7 +30,6 @@ public class GameManager : MonoBehaviour
     private bool _isGameOver;
     public bool IsGameOver { get { return _isGameOver; } }
     private int _score;
-    private int _continuesLeft = 3;
 
     //Spawn
     private Vector3 _spawnPos;
@@ -49,13 +48,17 @@ public class GameManager : MonoBehaviour
         
         _difficultyManager = FindObjectOfType<DifficultyManager>();
         _timeManager = FindObjectOfType<TimeManager>();
+    }
+
+    private void Start()
+    {
         CanStartGame();
     }
 
     public void CanStartGame()
     {
         //UI
-        titleScreen.gameObject.SetActive(false);
+        //titleScreen.gameObject.SetActive(false);
         tapTheScreenText.gameObject.SetActive(true);
 
         _score = 0;
@@ -68,6 +71,15 @@ public class GameManager : MonoBehaviour
 
         _timeManager.StopTime(true);
     }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            player.gameObject.SetActive(false);
+        }
+    }
+
     public void StartGame()
     {
         //Variables
@@ -128,24 +140,6 @@ public class GameManager : MonoBehaviour
         PowerupButtonsOn(false);
         _timeManager.StopTime(true);
         StopAllCoroutines();
-    }
-    private void ContinueGame()
-    {
-        _isGameOver = false;
-        gameOverScreen.gameObject.SetActive(false);
-
-        _timeManager.StopTime(false);
-
-        _continuesLeft--;
-        
-        //Show ad
-        if (_continuesLeft < 1)
-            gameOverScreen.transform.GetChild(2).gameObject.SetActive(false);
-
-        StartCoroutine(SpawnObstacle());
-        StartCoroutine(SpawnPowerups());
-        StartCoroutine(SpawnCoins());
-        StartCoroutine(SpawnClouds());
     }
 
     private void PowerupButtonsOn(bool isOn)

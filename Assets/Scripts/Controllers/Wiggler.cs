@@ -1,43 +1,58 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
 
 public class Wiggler : MonoBehaviour
 {
-    private float yPos;
-    private float yOrig;
+    private float _yPos;
+    private float _yOrig;
 
-    private float top;
-    private float bot;
+    private float _top;
+    private float _bot;
 
-    private float speed = 0.8f;
+    private readonly float _speed = 0.8f;
 
-    private Vector3 newPosition;
+    private Vector3 _newPosition;
+    private Vector3 _positive;
+    private Vector3 _negative;
+    private Transform _transform;
+    private Vector3 _originalPos;
+
+    private void Awake()
+    {
+        _transform = this.transform;
+        _originalPos = _transform.localPosition;
+    }
 
     private void Start()
     {
-        yOrig = transform.position.y;
-        top = yOrig + 0.3f;
-        bot = yOrig - 0.3f;
+        _yOrig = _originalPos.y;
+        _top = _yOrig + 0.3f;
+        _bot = _yOrig - 0.3f;
 
-        newPosition = new Vector3(0,1,0);
+        _newPosition = new Vector3(0,1,0);
+        _positive = new Vector3(0, 1, 0);
+        _negative = new Vector3(0, -1, 0);
     }
 
     private void Update()
     {
-        yPos = transform.position.y;
+        UpdatePosition();
+    }
 
-        if (yPos > top)
+    private void UpdatePosition()
+    {
+        _yPos = _transform.localPosition.y;
+
+        if (_yPos > _top)
         {
-            newPosition = new Vector3(0, -1, 0);
+            _newPosition = _negative;
         }
-        else if (yPos < bot)
+        else if (_yPos < _bot)
         {
-            yPos++;
-            newPosition = new Vector3(0, 1, 0);
+            _yPos++;
+            _newPosition = _positive;
         }
-
-
-        transform.Translate(newPosition * Time.deltaTime * speed);
+        
+        _transform.Translate(_newPosition * (Time.deltaTime * _speed));
     }
 }

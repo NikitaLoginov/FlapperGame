@@ -1,4 +1,4 @@
-﻿using System;
+﻿using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -8,7 +8,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _verticalThrust = 8;
     [SerializeField] private float _gravityModifier = 2f;
     [SerializeField] private float _maxSpeed = 11; //magnitude
-    private const float _gravityConstant = 9.81f;
+    private const float GravityConstant = 9.81f;
 
     //Input
     private bool _canMove;
@@ -18,7 +18,6 @@ public class PlayerController : MonoBehaviour
     private int _bigCoinValue = 10;
     private Rigidbody _playerRb;
     private Vector3 _gameOverPos;
-    private Vector3 _continuePos;
     
     //Managers
     private InvincibilityManager _invincibilityManager;
@@ -26,6 +25,7 @@ public class PlayerController : MonoBehaviour
     //Animation
     private Animator _playerAnim;
     private static readonly int Tapped = Animator.StringToHash("Tapped");
+    private bool isOnAndroid;
 
 
     private void Start()
@@ -35,15 +35,20 @@ public class PlayerController : MonoBehaviour
 
         _playerAnim = GetComponent<Animator>();
 
-        _continuePos = _playerRb.transform.position;
+        if (Application.platform == RuntimePlatform.Android)
+            isOnAndroid = true;
+
     }
 
     private void Update()
     {
-        CheckingTapInput();
+        if(isOnAndroid)
+            CheckingTapInput();
+        else
+            CheckingClickInput();
     }
 
-    private void CheckingTapInput()
+    private void CheckingClickInput()
     {
         if (Input.GetMouseButtonDown(0))
         {
@@ -53,6 +58,22 @@ public class PlayerController : MonoBehaviour
             }
             _canMove = true;
             _playerAnim.SetBool(Tapped, true);
+        }
+    }
+
+    private void CheckingTapInput()
+    {
+        for (int i = 0; i < Input.touchCount; i++)
+        {
+            if (Input.GetTouch(i).phase == TouchPhase.Began)
+            {
+                if (EventSystem.current.IsPointerOverGameObject())
+                {
+                    return;
+                }
+                _canMove = true;
+                _playerAnim.SetBool(Tapped, true);
+            }
         }
     }
 
@@ -70,9 +91,9 @@ public class PlayerController : MonoBehaviour
         if (!_invincibilityManager.IsInvincible)
         {
             //Applying constant force to bird to simulate gravity
-            _playerRb.AddForce(Vector3.down * (_gravityConstant * _gravityModifier), ForceMode.Force); //changed multiplication order paranteces
+            _playerRb.AddForce(Vector3.down * (GravityConstant * _gravityModifier), ForceMode.Force); //changed multiplication order paranteces
 
-            //Bird goes up by tapping the screen or pushing a button
+            //Bird goes up by tapping the screen
             //Checking for input
             if (_canMove)
             {
@@ -131,19 +152,19 @@ public class PlayerController : MonoBehaviour
         else if (other.gameObject.CompareTag("Powerup"))
         {
             // set powerup button active
-            if (other.gameObject.name == "Dash(Clone)")
+            if (other.gameObject.name == "Dash")
             {
                 EventBroker.CallForwardDash();
                 other.gameObject.SetActive(false); // disable powerup
             }
 
-            if (other.gameObject.name == "Slow(Clone)")
+            if (other.gameObject.name == "Slow")
             {
                 EventBroker.CallSlowMotion();
                 other.gameObject.SetActive(false);
             }
 
-            if (other.gameObject.name == "Invincibility(Clone)")
+            if (other.gameObject.name == "Invincibility")
             {
                 EventBroker.CallInvincibility();
                 other.gameObject.SetActive(false);

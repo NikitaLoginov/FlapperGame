@@ -15,7 +15,8 @@ public class EventBroker : MonoBehaviour
     public static event Action RestartGameHandler;
     public static event Action ShopButtonHandler;
     public static event Action BackButtonHandler;
-    public static event Action StartButtonHadler;
+    public static event Action StartButtonHandler;
+    public static event Action<int> ChangeHatHandler; 
 
 
     public static void CallUpdateScore(int scoreValue)
@@ -66,6 +67,11 @@ public class EventBroker : MonoBehaviour
 
     public static void CallOnStartButtonPressed()
     {
-        StartButtonHadler?.Invoke();
+        StartButtonHandler?.Invoke();
+    }
+
+    public static void CallChangeHat(int ID)
+    {
+        ChangeHatHandler?.Invoke(ID);
     }
 }
