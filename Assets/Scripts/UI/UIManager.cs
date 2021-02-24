@@ -1,4 +1,4 @@
-﻿using System;
+﻿using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -7,63 +7,44 @@ public class UIManager : MonoBehaviour
     [Header("UI")]
     [SerializeField] private GameObject _titleScreen;
     [SerializeField] private GameObject _skinShopScreen;
-    
-    [Header("Hats")]
-    [SerializeField] private GameObject[] hats;
-
+    [SerializeField] private TextMeshProUGUI _hsText;
+    [SerializeField] private HighScore _hsSO;
     [SerializeField] private GameObject _menuChicken;
-
-    private GameObject _hat;
-    private int i;
+    private int _highScore;
 
     private void Awake()
     {
+        _highScore = _hsSO.highScore;
+        _hsText.text = "High Score: " + _highScore;
+        EventBroker.StartButtonHandler += OnStartButtonPressed;
         EventBroker.ShopButtonHandler += OnShopButtonPressed;
         EventBroker.BackButtonHandler += OnBackButtonPressed;
-        EventBroker.StartButtonHandler += OnStartButtonPressed;
-        EventBroker.ChangeHatHandler += ChangeHat;
     }
-
-    private void Start()
-    {
-        _hat = hats[i];
-    }
-
-    void OnShopButtonPressed()
+    private void OnShopButtonPressed()
     {
         _titleScreen.gameObject.SetActive(false);
         _skinShopScreen.gameObject.SetActive(true);
         _menuChicken.gameObject.SetActive(true);
     }
 
-    void OnBackButtonPressed()
+    private void OnBackButtonPressed()
     {
         _menuChicken.gameObject.SetActive(false);
         _skinShopScreen.gameObject.SetActive(false);
         _titleScreen.gameObject.SetActive(true);
     }
 
-    void OnStartButtonPressed()
+    private void OnStartButtonPressed()
     {
         _titleScreen.gameObject.SetActive(false);
         Unsubscribe();
         SceneManager.LoadScene("FlappyChicken");
     }
 
-    void ChangeHat(int index)
-    {
-        if (i == hats.Length) i = 0;
-        
-        _hat.gameObject.SetActive(false);
-        _hat = hats[i++];
-        _hat.gameObject.SetActive(true);
-    }
-
-    void Unsubscribe()
+    private void Unsubscribe()
     {
         EventBroker.ShopButtonHandler -= OnShopButtonPressed;
         EventBroker.BackButtonHandler -= OnBackButtonPressed;
         EventBroker.StartButtonHandler -= OnStartButtonPressed;
-        EventBroker.ChangeHatHandler -= ChangeHat;
     }
 }

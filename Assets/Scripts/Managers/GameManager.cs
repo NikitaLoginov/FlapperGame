@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
@@ -15,11 +16,11 @@ public class GameManager : MonoBehaviour
 
     //UI
     [SerializeField] private TextMeshProUGUI scoreText;
-    [SerializeField] private GameObject titleScreen;
     [SerializeField] private GameObject gameOverScreen;
     [SerializeField] private GameObject powerupManager;
     [SerializeField] private GameObject forwardDashButton;
     [SerializeField] private GameObject tapTheScreenText;
+    [SerializeField] private HighScore highScoreSO;
     public GameObject ForwardDashButton { get { return forwardDashButton; } }
     [SerializeField] private GameObject slowMotionButton;
     public GameObject SlowMotionButton { get { return slowMotionButton; } }
@@ -48,14 +49,15 @@ public class GameManager : MonoBehaviour
         
         _difficultyManager = FindObjectOfType<DifficultyManager>();
         _timeManager = FindObjectOfType<TimeManager>();
+        EventBroker.CanStartGameHandler += CanStartGame;
     }
 
     private void Start()
     {
-        CanStartGame();
+        EventBroker.CallCanStartGame();
     }
 
-    public void CanStartGame()
+    private void CanStartGame()
     {
         //UI
         //titleScreen.gameObject.SetActive(false);
@@ -139,7 +141,18 @@ public class GameManager : MonoBehaviour
 
         PowerupButtonsOn(false);
         _timeManager.StopTime(true);
+        
+        CheckIfHighScore();
+        
         StopAllCoroutines();
+    }
+
+    private void CheckIfHighScore()
+    {
+        if (_score > highScoreSO.highScore)
+        {
+            highScoreSO.highScore = _score;
+        }
     }
 
     private void PowerupButtonsOn(bool isOn)
@@ -168,6 +181,7 @@ public class GameManager : MonoBehaviour
         EventBroker.ForwardDashHandler -= TurnOnDashButton; //On when getting powerup
         EventBroker.SlowMotionHandler -= TurnOnSlowMoButton; //On when getting powerup
         EventBroker.InvincibilityHandler -= TurnOnInvincibilityButton;
+        EventBroker.CanStartGameHandler -= CanStartGame;
     }
 
     private IEnumerator SpawnObstacle()

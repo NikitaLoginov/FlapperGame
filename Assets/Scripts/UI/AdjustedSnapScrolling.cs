@@ -32,13 +32,20 @@ public class AdjustedSnapScrolling : MonoBehaviour
     private bool _isScrolling;
     private Vector2 _contentVector;
 
-    private void Start()
+
+    private void Awake()
     {
         _panelPositions = new Vector2[instPans.Length];
         _panelsScale = new Vector2[instPans.Length];
+        
         _buttons = new Button[instPans.Length];
+        
         _contentRect = GetComponent<RectTransform>();
         
+    }
+
+    private void Start()
+    {
         for (int i = 0; i < instPans.Length; i++)
         {
             //spawning prefab on transform of the Content and will use local coordinates
@@ -48,9 +55,8 @@ public class AdjustedSnapScrolling : MonoBehaviour
             instPans[i].transform.localPosition = new Vector2(instPans[i - 1].transform.localPosition.x +
                                                               instPans[i].GetComponent<RectTransform>().sizeDelta.x +
                                                               panelOffset, instPans[i].transform.localPosition.y);
-            _panelPositions[i] = - instPans[i].transform.localPosition; // because content position extends to minus coorditates and prefabs go into plus
+            _panelPositions[i] = - instPans[i].transform.localPosition; // because content position extends to minus coordinates and prefabs go into plus
         }
-
         for (int i = 0; i < _buttons.Length; i++)
         {
             _buttons[i] = instPans[i].GetComponent<Button>();

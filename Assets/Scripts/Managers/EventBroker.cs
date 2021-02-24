@@ -5,6 +5,7 @@ public class EventBroker : MonoBehaviour
 {
     public static event Action<int> UpdateScoreHandler;
     public static event Action DifficultyHandler;
+    public static event Action CanStartGameHandler;
 
     //Buttons
     public static event Action ForwardDashHandler;
@@ -16,9 +17,13 @@ public class EventBroker : MonoBehaviour
     public static event Action ShopButtonHandler;
     public static event Action BackButtonHandler;
     public static event Action StartButtonHandler;
-    public static event Action<int> ChangeHatHandler; 
+    public static event Action<int> ChangeHatHandler;
 
 
+    public static void CallCanStartGame()
+    {
+        CanStartGameHandler?.Invoke();
+    }
     public static void CallUpdateScore(int scoreValue)
     {
         if (UpdateScoreHandler != null)
@@ -74,4 +79,5 @@ public class EventBroker : MonoBehaviour
     {
         ChangeHatHandler?.Invoke(ID);
     }
+
 }

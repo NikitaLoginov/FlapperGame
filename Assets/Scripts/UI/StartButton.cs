@@ -3,12 +3,12 @@ using UnityEngine.UI;
 
 public class StartButton : MonoBehaviour
 {
-    private Button startButton;
+    private Button _startButton;
 
-    private void Start()
+    private void Awake()
     {
-        startButton = GetComponent<Button>();
+        _startButton = GetComponent<Button>();
 
-        startButton.onClick.AddListener(EventBroker.CallOnStartButtonPressed);
+        _startButton.onClick.AddListener(EventBroker.CallOnStartButtonPressed);
     }
 }
