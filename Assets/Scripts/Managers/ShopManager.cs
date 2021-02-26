@@ -6,6 +6,7 @@ public class ShopManager : MonoBehaviour
     [SerializeField] private GameObject[] hats;
 
     [SerializeField] private Hat hatSO;
+    [SerializeField] private HighScore highScore;
 
     private GameObject _hat;
     private int _i;
@@ -21,12 +22,14 @@ public class ShopManager : MonoBehaviour
     {
         _i = index;
         if (_i == hats.Length) _i = 0;
+
+        _hat.gameObject.SetActive(hatSO.isHatActive = false);
+        if (highScore.highScore <= 100 && _i == 0) return; // checks if high score is already more than 100 or if hat was already payed for. if so player can have the first hat
         
-        _hat.gameObject.SetActive(false);
-        _hat = hats[_i++];
-        _hat.gameObject.SetActive(true);
-        
-        hatSO.index = _i - 1;// because we can't have 0 here for some reason
+        _hat = hats[_i];
+        _hat.gameObject.SetActive(hatSO.isHatActive = true);
+
+        hatSO.index = _i;
     }
 
     private void OnDisable()

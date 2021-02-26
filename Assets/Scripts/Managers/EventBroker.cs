@@ -18,6 +18,7 @@ public class EventBroker : MonoBehaviour
     public static event Action BackButtonHandler;
     public static event Action StartButtonHandler;
     public static event Action<int> ChangeHatHandler;
+    public static event Action KnockDownHatHandler;
 
 
     public static void CallCanStartGame()
@@ -33,6 +34,12 @@ public class EventBroker : MonoBehaviour
     {
         DifficultyHandler?.Invoke();
     }
+
+    public static void CallKnockDownHat()
+    {
+        KnockDownHatHandler?.Invoke();
+    }
+
     public static void CallGameOver()
     {
         GameOverHandler?.Invoke();

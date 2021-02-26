@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 2100942530}
-  m_IndirectSpecularColor: {r: 0.15746363, g: 0.50551414, b: 0.65048254, a: 1}
+  m_IndirectSpecularColor: {r: 0.17177984, g: 0.55079263, b: 0.7082353, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1594,9 +1594,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 83618879875817984, guid: c03588998e95a014b803dc5404f98cf4,
         type: 3}
-      propertyPath: m_IsActive
-      value: 0
+      propertyPath: m_TagString
+      value: Hat
       objectReference: {fileID: 0}
+    - target: {fileID: 83618879875817990, guid: c03588998e95a014b803dc5404f98cf4,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3374856229061711777, guid: c03588998e95a014b803dc5404f98cf4,
+        type: 3}
+      propertyPath: invincibilityManager
+      value: 
+      objectReference: {fileID: 1428621559}
     - target: {fileID: 3539963326034914725, guid: c03588998e95a014b803dc5404f98cf4,
         type: 3}
       propertyPath: m_RootOrder
@@ -1657,10 +1667,15 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 3546465812335302999, guid: c03588998e95a014b803dc5404f98cf4,
+    - target: {fileID: 7737639931438532172, guid: c03588998e95a014b803dc5404f98cf4,
         type: 3}
-      propertyPath: m_IsActive
-      value: 0
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7737639931438532174, guid: c03588998e95a014b803dc5404f98cf4,
+        type: 3}
+      propertyPath: m_TagString
+      value: Hat
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c03588998e95a014b803dc5404f98cf4, type: 3}

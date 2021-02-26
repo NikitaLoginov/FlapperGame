@@ -1,5 +1,21 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!54 &1032810043695841971
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1280613765}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &6799688291365598049
 GameObject:
   m_ObjectHideFlags: 0
@@ -112,7 +128,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6799688291365760839
 Transform:
   m_ObjectHideFlags: 0
@@ -457,6 +473,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cube02
       objectReference: {fileID: 0}
+    - target: {fileID: 83618879977231067, guid: e0d888d340faee344af0f35af3297098,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e0d888d340faee344af0f35af3297098, type: 3}
 --- !u!4 &971060459 stripped
@@ -534,6 +555,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b922f20cde26aff4ca8c5df09014cfa3, type: 3}
+--- !u!1 &1280613765 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7737639931947392453, guid: b922f20cde26aff4ca8c5df09014cfa3,
+    type: 3}
+  m_PrefabInstance: {fileID: 7737639933091676224}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1280613766 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7737639931947392454, guid: b922f20cde26aff4ca8c5df09014cfa3,

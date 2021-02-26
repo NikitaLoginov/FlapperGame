@@ -11,6 +11,6 @@ public class HatManager : MonoBehaviour
     {
         _index = hatSO.index;
         _hat = hats[_index];
-        _hat.gameObject.SetActive(true);
+        _hat.gameObject.SetActive(hatSO.isHatActive);
     }
 }

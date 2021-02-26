@@ -1,5 +1,4 @@
-﻿using UnityEditor;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class PlayerController : MonoBehaviour
@@ -13,12 +12,10 @@ public class PlayerController : MonoBehaviour
     //Input
     private bool _canMove;
 
-    private int _pointValue = 1;
-    private int _regularCoinValue = 1;
-    private int _bigCoinValue = 10;
     private Rigidbody _playerRb;
     private Vector3 _gameOverPos;
-    
+    public Vector3 GameOverPos { set => _gameOverPos = value; }
+
     //Managers
     private InvincibilityManager _invincibilityManager;
     
@@ -122,64 +119,4 @@ public class PlayerController : MonoBehaviour
         }
 
     }
-
-    //Collisions
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        _gameOverPos = transform.position;
-        if (collision.gameObject.CompareTag("Obstacle") && !_invincibilityManager.IsInvincible)
-        {
-            //Game Over!
-            EventBroker.CallGameOver();
-        }
-        else if (collision.gameObject.CompareTag("Obstacle") && _invincibilityManager.IsInvincible)
-        {
-            //destruction animation
-            collision.collider.gameObject.SetActive(false); // turns off whole obstacle
-        }
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.CompareTag("ScoreTrigger"))
-        {
-            EventBroker.CallUpdateScore(_pointValue);
-
-            EventBroker.CallDifficultyModifier();
-
-        }
-        else if (other.gameObject.CompareTag("Powerup"))
-        {
-            // set powerup button active
-            if (other.gameObject.name == "Dash")
-            {
-                EventBroker.CallForwardDash();
-                other.gameObject.SetActive(false); // disable powerup
-            }
-
-            if (other.gameObject.name == "Slow")
-            {
-                EventBroker.CallSlowMotion();
-                other.gameObject.SetActive(false);
-            }
-
-            if (other.gameObject.name == "Invincibility")
-            {
-                EventBroker.CallInvincibility();
-                other.gameObject.SetActive(false);
-            }
-        }
-        else if (other.gameObject.CompareTag("Coin"))
-        {
-            other.gameObject.SetActive(false);
-            EventBroker.CallUpdateScore(_regularCoinValue);
-        }
-        else if (other.gameObject.CompareTag("BCoin"))
-        {
-            other.gameObject.SetActive(false);
-            EventBroker.CallUpdateScore(_bigCoinValue);
-        }
-    }
-
 }

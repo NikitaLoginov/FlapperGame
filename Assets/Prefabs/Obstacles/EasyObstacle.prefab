@@ -56,6 +56,7 @@ GameObject:
   - component: {fileID: 7980141097376392460}
   - component: {fileID: 7980141097376392463}
   - component: {fileID: 114595644250254044}
+  - component: {fileID: 648306240007182605}
   m_Layer: 0
   m_Name: EasyObstacle
   m_TagString: Obstacle
@@ -118,6 +119,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3470aad5c0ada374fac6a23df873d520, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &648306240007182605
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7980141097376392449}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 679c00a88ba980c48ac44fcdaba0e3f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &428758827701999398

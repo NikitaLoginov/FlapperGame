@@ -14,6 +14,7 @@ TagManager:
   - Upper
   - CoinPattern
   - BCoin
+  - Hat
   layers:
   - Default
   - TransparentFX
