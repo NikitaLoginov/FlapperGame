@@ -22,6 +22,7 @@ public class EventBroker : MonoBehaviour
     public static event Action PauseGameHandler;
     public static event Action ResumeGameHandler;
     public static event Action MainMenuButtonHandler;
+    public static event Action OptionsButtonHandler;
 
 
     public static void CallCanStartGame()
@@ -103,5 +104,10 @@ public class EventBroker : MonoBehaviour
     public static void CallMainMenu()
     {
         MainMenuButtonHandler?.Invoke();
+    }
+
+    public static void CallOptions()
+    {
+        OptionsButtonHandler?.Invoke();
     }
 }

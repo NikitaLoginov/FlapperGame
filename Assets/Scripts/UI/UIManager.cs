@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -10,6 +11,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _hsText;
     [SerializeField] private HighScore _hsSO;
     [SerializeField] private GameObject _menuChicken;
+    [SerializeField] private GameObject optionsScreen;
     private int _highScore;
 
     private void Awake()
@@ -19,6 +21,7 @@ public class UIManager : MonoBehaviour
         EventBroker.StartButtonHandler += OnStartButtonPressed;
         EventBroker.ShopButtonHandler += OnShopButtonPressed;
         EventBroker.BackButtonHandler += OnBackButtonPressed;
+        EventBroker.OptionsButtonHandler += OnOptionsButtonPressed;
     }
     private void OnShopButtonPressed()
     {
@@ -29,16 +32,34 @@ public class UIManager : MonoBehaviour
 
     private void OnBackButtonPressed()
     {
-        _menuChicken.gameObject.SetActive(false);
-        _skinShopScreen.gameObject.SetActive(false);
+        if (_menuChicken.gameObject.activeInHierarchy)
+        {
+            _menuChicken.gameObject.SetActive(false);
+            _skinShopScreen.gameObject.SetActive(false);
+        }
+        else if (optionsScreen.gameObject.activeInHierarchy)
+        {
+            optionsScreen.gameObject.SetActive(false);
+        }
         _titleScreen.gameObject.SetActive(true);
     }
 
     private void OnStartButtonPressed()
     {
         _titleScreen.gameObject.SetActive(false);
-        Unsubscribe();
+        //Unsubscribe();
         SceneManager.LoadScene("FlappyChicken");
+    }
+
+    private void OnOptionsButtonPressed()
+    {
+        _titleScreen.gameObject.SetActive(false);
+        optionsScreen.gameObject.SetActive(true);
+    }
+
+    private void OnDestroy()
+    {
+        Unsubscribe();
     }
 
     private void Unsubscribe()
@@ -46,5 +67,6 @@ public class UIManager : MonoBehaviour
         EventBroker.ShopButtonHandler -= OnShopButtonPressed;
         EventBroker.BackButtonHandler -= OnBackButtonPressed;
         EventBroker.StartButtonHandler -= OnStartButtonPressed;
+        EventBroker.OptionsButtonHandler -= OnOptionsButtonPressed;
     }
 }
