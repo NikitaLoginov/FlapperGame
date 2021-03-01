@@ -6,6 +6,7 @@ public class EventBroker : MonoBehaviour
     public static event Action<int> UpdateScoreHandler;
     public static event Action DifficultyHandler;
     public static event Action CanStartGameHandler;
+    public static event Action KnockDownHatHandler;
 
     //Buttons
     public static event Action ForwardDashHandler;
@@ -18,7 +19,9 @@ public class EventBroker : MonoBehaviour
     public static event Action BackButtonHandler;
     public static event Action StartButtonHandler;
     public static event Action<int> ChangeHatHandler;
-    public static event Action KnockDownHatHandler;
+    public static event Action PauseGameHandler;
+    public static event Action ResumeGameHandler;
+    public static event Action MainMenuButtonHandler;
 
 
     public static void CallCanStartGame()
@@ -87,4 +90,18 @@ public class EventBroker : MonoBehaviour
         ChangeHatHandler?.Invoke(ID);
     }
 
+    public static void CallPauseGame()
+    {
+        PauseGameHandler?.Invoke();
+    }
+
+    public static void CallResumeGame()
+    {
+        ResumeGameHandler?.Invoke();
+    }
+
+    public static void CallMainMenu()
+    {
+        MainMenuButtonHandler?.Invoke();
+    }
 }

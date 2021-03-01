@@ -60,7 +60,6 @@ public class GameManager : MonoBehaviour
     private void CanStartGame()
     {
         //UI
-        //titleScreen.gameObject.SetActive(false);
         tapTheScreenText.gameObject.SetActive(true);
 
         _score = 0;
@@ -165,9 +164,12 @@ public class GameManager : MonoBehaviour
     //Restarting scene and unsubscribing from events here
     private void RestartGame()
     {
-        Unsubscribe();
-
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    private void OnDestroy()
+    {
+        Unsubscribe();
     }
 
     private void Unsubscribe()

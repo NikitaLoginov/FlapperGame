@@ -33,7 +33,7 @@ public class TimeManager : MonoBehaviour
         {
             Time.timeScale = 0f;
         }
-        else
+        else if (!canStop)
         {
             Time.timeScale = 1f;
         }

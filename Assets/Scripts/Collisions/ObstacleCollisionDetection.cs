@@ -9,5 +9,9 @@ public class ObstacleCollisionDetection : MonoBehaviour
         {
             EventBroker.CallKnockDownHat();
         }
+        else if (other.CompareTag("Player"))
+        {
+            EventBroker.CallGameOver();
+        }
     }
 }
