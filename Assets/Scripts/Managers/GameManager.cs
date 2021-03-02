@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using TMPro;
-using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
@@ -14,23 +11,9 @@ public class GameManager : MonoBehaviour
     private TimeManager _timeManager;
     private SpeedManager _speedManager;
 
-    //UI
-    [SerializeField] private TextMeshProUGUI scoreText;
-    [SerializeField] private GameObject gameOverScreen;
-    [SerializeField] private GameObject powerupManager;
-    [SerializeField] private GameObject forwardDashButton;
-    [SerializeField] private GameObject tapTheScreenText;
-    [SerializeField] private HighScore highScoreSO;
-    public GameObject ForwardDashButton { get { return forwardDashButton; } }
-    [SerializeField] private GameObject slowMotionButton;
-    public GameObject SlowMotionButton { get { return slowMotionButton; } }
-    [SerializeField] private GameObject invincibilityButton;
-    public GameObject InvincibilityButton { get { return invincibilityButton; } }
-
     //Variables
     private bool _isGameOver;
     public bool IsGameOver { get { return _isGameOver; } }
-    private int _score;
 
     //Spawn
     private Vector3 _spawnPos;
@@ -50,6 +33,7 @@ public class GameManager : MonoBehaviour
         _difficultyManager = FindObjectOfType<DifficultyManager>();
         _timeManager = FindObjectOfType<TimeManager>();
         EventBroker.CanStartGameHandler += CanStartGame;
+        EventBroker.StartGameHandler += StartGame;
     }
 
     private void Start()
@@ -59,15 +43,6 @@ public class GameManager : MonoBehaviour
 
     private void CanStartGame()
     {
-        //UI
-        tapTheScreenText.gameObject.SetActive(true);
-
-        _score = 0;
-        scoreText.gameObject.SetActive(true);
-
-        //Manager set active
-        powerupManager.gameObject.SetActive(true);
-
         player.gameObject.SetActive(true);
 
         _timeManager.StopTime(true);
@@ -75,6 +50,7 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        //for debuging
         if (Input.GetKeyDown(KeyCode.H))
         {
             player.gameObject.SetActive(false);
@@ -89,11 +65,6 @@ public class GameManager : MonoBehaviour
         //Events
         EventBroker.GameOverHandler += GameOver;
         EventBroker.RestartGameHandler += RestartGame;
-        EventBroker.ForwardDashHandler += TurnOnDashButton; //On when getting powerup
-        EventBroker.SlowMotionHandler += TurnOnSlowMoButton; //On when getting powerup
-        EventBroker.InvincibilityHandler += TurnOnInvincibilityButton; //On when getting powerup
-
-        EventBroker.UpdateScoreHandler += UpdateScore;
 
         EventBroker.DifficultyHandler += _difficultyManager.ModifyDifficulty;
         _difficultyManager.CreateShrinkersList();
@@ -104,64 +75,19 @@ public class GameManager : MonoBehaviour
         StartCoroutine(SpawnCoins());
         StartCoroutine(SpawnClouds());
         
-        //UI
-        tapTheScreenText.gameObject.SetActive(false);
-
-        UpdateScore(_score);
         _timeManager.StopTime(false);
         
-    }
-
-    private void TurnOnInvincibilityButton()
-    {
-        invincibilityButton.gameObject.SetActive(true);
-    }
-
-    private void TurnOnSlowMoButton()
-    {
-        slowMotionButton.gameObject.SetActive(true);
-    }
-
-    private void TurnOnDashButton()
-    {
-        forwardDashButton.gameObject.SetActive(true);
-    }
-
-    private void UpdateScore(int scoreToAdd)
-    {
-        _score += scoreToAdd;
-        scoreText.text = "Score: " + _score;
     }
 
     private void GameOver()
     {
         _isGameOver = true;
-        gameOverScreen.gameObject.SetActive(true);
-
-        PowerupButtonsOn(false);
         _timeManager.StopTime(true);
-        
-        CheckIfHighScore();
         
         StopAllCoroutines();
     }
 
-    private void CheckIfHighScore()
-    {
-        if (_score > highScoreSO.highScore)
-        {
-            highScoreSO.highScore = _score;
-        }
-    }
-
-    private void PowerupButtonsOn(bool isOn)
-    {
-        forwardDashButton.gameObject.SetActive(isOn);
-        slowMotionButton.gameObject.SetActive(isOn);
-        invincibilityButton.gameObject.SetActive(isOn);
-    }
-
-    //Restarting scene and unsubscribing from events here
+    //Restarting scene 
     private void RestartGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
@@ -174,16 +100,12 @@ public class GameManager : MonoBehaviour
 
     private void Unsubscribe()
     {
-        EventBroker.UpdateScoreHandler -= UpdateScore;
-
         EventBroker.DifficultyHandler -= _difficultyManager.ModifyDifficulty;
         EventBroker.GameOverHandler -= GameOver;
         EventBroker.RestartGameHandler -= RestartGame;
 
-        EventBroker.ForwardDashHandler -= TurnOnDashButton; //On when getting powerup
-        EventBroker.SlowMotionHandler -= TurnOnSlowMoButton; //On when getting powerup
-        EventBroker.InvincibilityHandler -= TurnOnInvincibilityButton;
         EventBroker.CanStartGameHandler -= CanStartGame;
+        EventBroker.StartGameHandler -= StartGame;
     }
 
     private IEnumerator SpawnObstacle()

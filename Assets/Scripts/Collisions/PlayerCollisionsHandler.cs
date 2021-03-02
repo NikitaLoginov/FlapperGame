@@ -44,19 +44,19 @@ public class PlayerCollisionsHandler : MonoBehaviour
             // set powerup button active
             if (other.gameObject.name == "Dash")
             {
-                EventBroker.CallForwardDash();
+                EventBroker.CallForwardDashButton();
                 other.gameObject.SetActive(false); // disable powerup
             }
 
             if (other.gameObject.name == "Slow")
             {
-                EventBroker.CallSlowMotion();
+                EventBroker.CallSlowMotionButton();
                 other.gameObject.SetActive(false);
             }
 
             if (other.gameObject.name == "Invincibility")
             {
-                EventBroker.CallInvincibility();
+                EventBroker.CallInvincibilityButton();
                 other.gameObject.SetActive(false);
             }
         }

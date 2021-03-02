@@ -9,9 +9,9 @@ public class EventBroker : MonoBehaviour
     public static event Action KnockDownHatHandler;
 
     //Buttons
-    public static event Action ForwardDashHandler;
-    public static event Action SlowMotionHandler;
-    public static event Action InvincibilityHandler;
+    public static event Action ForwardDashButtonHandler;
+    public static event Action SlowMotionButtonHandler;
+    public static event Action InvincibilityButtonHandler;
 
     public static event Action GameOverHandler;
     public static event Action RestartGameHandler;
@@ -23,12 +23,24 @@ public class EventBroker : MonoBehaviour
     public static event Action ResumeGameHandler;
     public static event Action MainMenuButtonHandler;
     public static event Action OptionsButtonHandler;
+    public static event Action StartGameHandler;
+    
+    //Powerups
+    public static event Action InvincibilityHandler;
+    public static event Action SlowMotionHandler;
+    public static event Action DashHandler;
 
 
     public static void CallCanStartGame()
     {
         CanStartGameHandler?.Invoke();
     }
+
+    public static void CallStartGame()
+    {
+        StartGameHandler?.Invoke();
+    }
+
     public static void CallUpdateScore(int scoreValue)
     {
         if (UpdateScoreHandler != null)
@@ -50,19 +62,19 @@ public class EventBroker : MonoBehaviour
     }
 
     //Buttons
-    public static void CallForwardDash()
+    public static void CallForwardDashButton()
     {
-        ForwardDashHandler?.Invoke();
+        ForwardDashButtonHandler?.Invoke();
     }
 
-    public static void CallSlowMotion()
+    public static void CallSlowMotionButton()
     {
-        SlowMotionHandler?.Invoke();
+        SlowMotionButtonHandler?.Invoke();
     }
 
-    public static void CallInvincibility()
+    public static void CallInvincibilityButton()
     {
-        InvincibilityHandler?.Invoke();
+        InvincibilityButtonHandler?.Invoke();
     }
 
 
@@ -109,5 +121,21 @@ public class EventBroker : MonoBehaviour
     public static void CallOptions()
     {
         OptionsButtonHandler?.Invoke();
+    }
+    
+    //Powerups
+    public static void CallInvincibility()
+    {
+        InvincibilityHandler?.Invoke();
+    }
+    
+    public static void CallSlowMotion()
+    {
+        SlowMotionHandler?.Invoke();
+    }
+    
+    public static void CallDash()
+    {
+        DashHandler?.Invoke();
     }
 }

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 2100942530}
-  m_IndirectSpecularColor: {r: 0.1549799, g: 0.49769372, b: 0.6405363, a: 1}
+  m_IndirectSpecularColor: {r: 0.19561459, g: 0.62645876, b: 0.8047335, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -157,14 +157,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1599300034}
-  scoreText: {fileID: 2080268337}
-  gameOverScreen: {fileID: 2081380194}
-  powerupManager: {fileID: 254594023}
-  forwardDashButton: {fileID: 1534529685}
-  tapTheScreenText: {fileID: 899470484}
-  highScoreSO: {fileID: 11400000, guid: 032b2d02ca0b9ed4f8c5fac010a6671a, type: 2}
-  slowMotionButton: {fileID: 611550270}
-  invincibilityButton: {fileID: 688539058}
 --- !u!4 &62565882
 Transform:
   m_ObjectHideFlags: 0
@@ -2738,6 +2730,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pauseScreen: {fileID: 1437650932}
   timeManager: {fileID: 2102220765}
+  scoreText: {fileID: 2080268337}
+  gameOverScreen: {fileID: 2081380194}
+  powerupManager: {fileID: 254594023}
+  forwardDashButton: {fileID: 1534529685}
+  tapTheScreenText: {fileID: 899470484}
+  highScoreSO: {fileID: 11400000, guid: 032b2d02ca0b9ed4f8c5fac010a6671a, type: 2}
+  slowMotionButton: {fileID: 611550270}
+  invincibilityButton: {fileID: 688539058}
 --- !u!1 &1054636753
 GameObject:
   m_ObjectHideFlags: 0
