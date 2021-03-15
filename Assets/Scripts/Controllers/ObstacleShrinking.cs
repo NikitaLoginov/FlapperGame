@@ -13,7 +13,7 @@ public class ObstacleShrinking : MonoBehaviour
     private Vector3 _upperObstaclePos;
 
     private bool _canShrink;
-    public bool CanShrink { set { _canShrink = value; } }
+    public bool CanShrink { set => _canShrink = value; }
 
     private void Awake()
     {
@@ -29,7 +29,7 @@ public class ObstacleShrinking : MonoBehaviour
         } 
     }
 
-    public void NarrowTheGap()
+    private void NarrowTheGap()
     {
         float step = _narrowingSpeed * Time.deltaTime;
         

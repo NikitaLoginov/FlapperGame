@@ -36,7 +36,6 @@ public class HatController : MonoBehaviour
 
     private IEnumerator DisableHat()
     {
-        Debug.Log(_hatPos.y,this);
         yield return new WaitForSeconds(2f);
         _hat.gameObject.SetActive(false); 
     }

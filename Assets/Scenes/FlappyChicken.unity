@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 2100942530}
-  m_IndirectSpecularColor: {r: 0.19561459, g: 0.62645876, b: 0.8047335, a: 1}
+  m_IndirectSpecularColor: {r: 0.14608863, g: 0.46977568, b: 0.6051482, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1573,6 +1573,7 @@ GameObject:
   - component: {fileID: 611550274}
   - component: {fileID: 611550273}
   - component: {fileID: 611550272}
+  - component: {fileID: 611550275}
   m_Layer: 5
   m_Name: SlowMotionButton
   m_TagString: Untagged
@@ -1680,6 +1681,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 611550270}
   m_CullTransparentMesh: 0
+--- !u!114 &611550275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 611550270}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d0b2bdd113174e48b3103ec26bdb9e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &632745849
 GameObject:
   m_ObjectHideFlags: 0
@@ -1868,6 +1881,7 @@ GameObject:
   - component: {fileID: 688539062}
   - component: {fileID: 688539061}
   - component: {fileID: 688539060}
+  - component: {fileID: 688539063}
   m_Layer: 5
   m_Name: InvincibilityButton
   m_TagString: Untagged
@@ -1975,6 +1989,61 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 688539058}
   m_CullTransparentMesh: 0
+--- !u!114 &688539063
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 688539058}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6632c164c83578949ba9253f93964bfc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &689423861
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 689423862}
+  - component: {fileID: 689423863}
+  m_Layer: 0
+  m_Name: SpawnManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &689423862
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 689423861}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1473738980}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &689423863
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 689423861}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5bf2a72f275d46488f79e36cc8a0eb0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &754939735
 GameObject:
   m_ObjectHideFlags: 0
@@ -2263,6 +2332,11 @@ PrefabInstance:
       propertyPath: invincibilityManager
       value: 
       objectReference: {fileID: 1428621559}
+    - target: {fileID: 3519937252464120535, guid: c03588998e95a014b803dc5404f98cf4,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 6410778a63acc7e42b8fdd986e68bc93, type: 2}
     - target: {fileID: 3539963326034914725, guid: c03588998e95a014b803dc5404f98cf4,
         type: 3}
       propertyPath: m_RootOrder
@@ -2322,6 +2396,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 3546465812335302999, guid: c03588998e95a014b803dc5404f98cf4,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3546465812335302999, guid: c03588998e95a014b803dc5404f98cf4,
         type: 3}
@@ -4070,6 +4149,7 @@ Transform:
   - {fileID: 639873304}
   - {fileID: 502558692}
   - {fileID: 1049799309}
+  - {fileID: 689423862}
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4091,6 +4171,7 @@ GameObject:
   - component: {fileID: 1534529688}
   - component: {fileID: 1534529687}
   - component: {fileID: 1534529686}
+  - component: {fileID: 1534529690}
   m_Layer: 5
   m_Name: ForwardDashButton
   m_TagString: Untagged
@@ -4198,6 +4279,18 @@ RectTransform:
   m_AnchoredPosition: {x: 159.19995, y: 180.2998}
   m_SizeDelta: {x: 222.48901, y: 176.60654}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1534529690
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1534529685}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76e28f27e0cb42647a85f9c89881543d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1558146856
 GameObject:
   m_ObjectHideFlags: 0

@@ -3,12 +3,12 @@ using UnityEngine.UI;
 
 public class TapTheScreen : MonoBehaviour
 {
-    private Button tapTheScreenButton;
+    private Button _tapTheScreenButton;
 
-    private void Start()
+    private void Awake()
     {
-        tapTheScreenButton = GetComponent<Button>();
+        _tapTheScreenButton = GetComponent<Button>();
 
-        tapTheScreenButton.onClick.AddListener(EventBroker.CallStartGame);
+        _tapTheScreenButton.onClick.AddListener(EventBroker.CallStartGame);
     }
 }

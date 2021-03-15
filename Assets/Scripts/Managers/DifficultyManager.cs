@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,7 +13,7 @@ public class DifficultyManager : MonoBehaviour
     private float _lower = -28;
     private float _upper = 28;
 
-    public float DifficultyModifier { get { return _difficultyModifier; } }
+    public float DifficultyModifier =>_difficultyModifier; 
 
 
     private List<GameObject> _obstacleShrinkers;
