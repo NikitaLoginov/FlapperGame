@@ -12,17 +12,17 @@ public class ObjectPooler : MonoBehaviour
     [HideInInspector] public List<GameObject> pooledObstacles;
 
     //Powerups
-    public List<GameObject> powerupsToPool;
+    [SerializeField] private List<GameObject> powerupsToPool;
     private List<GameObject> _pooledPowerups;
     public int amountPowerupsToPool;
 
     //Coins
-    public List<GameObject> coinsToPool;
+    [SerializeField] private List<GameObject> coinsToPool;
     private List<GameObject> _pooledCoinPatterns;
     public int amountCoinPatternsToPool;
 
     //Clouds
-    public List<GameObject> cloudsToPool;
+    [SerializeField] private List<GameObject> cloudsToPool;
     private List<GameObject> _pooledCloudPatterns;
     public int amountCloudPatternsToPool;
 
