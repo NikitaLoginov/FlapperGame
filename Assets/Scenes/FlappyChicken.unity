@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 2100942530}
-  m_IndirectSpecularColor: {r: 0.14608863, g: 0.46977568, b: 0.6051482, a: 1}
+  m_IndirectSpecularColor: {r: 0.062272366, g: 0.20980407, b: 0.27753544, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -4807,37 +4807,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 208b89139264d4a3aac65f5d7d48d559, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pooledObstacles: []
-  obstaclesToPool: {fileID: 7980141097376392449, guid: c1a6ef8a60d6aa94db39514db077fa81,
-    type: 3}
+  obstaclesToPool:
+  - {fileID: 7980141097376392449, guid: c1a6ef8a60d6aa94db39514db077fa81, type: 3}
   amountObstaclesToPool: 3
-  pooledPowerups: []
-  dashPowerupToPool: {fileID: 5580950876393184368, guid: c6a07058f7d0112448444017c2434f5d,
-    type: 3}
-  slowMoPowerupToPool: {fileID: 8655309343952043088, guid: 89a6c44e90e1c8648a465ae0e5542a4e,
-    type: 3}
-  invincibilityPowerupToPool: {fileID: 1564151664754559222, guid: f0fd0cadc3d9af44381a6f895bfaf814,
-    type: 3}
+  pooledObstacles: []
+  powerupsToPool:
+  - {fileID: 5580950876393184368, guid: c6a07058f7d0112448444017c2434f5d, type: 3}
+  - {fileID: 1564151664754559222, guid: f0fd0cadc3d9af44381a6f895bfaf814, type: 3}
+  - {fileID: 8655309343952043088, guid: 89a6c44e90e1c8648a465ae0e5542a4e, type: 3}
   amountPowerupsToPool: 1
-  pooledCoinPatterns: []
-  trianglePatterToPool: {fileID: 1431686830358438043, guid: d2d45f5c231dfe64db2291e28ef082e7,
-    type: 3}
-  rombPatternToPool: {fileID: 1431686830358438043, guid: d172a6df96d2d894ba32bf2e4312a5a5,
-    type: 3}
-  bCoinPatternToPool: {fileID: 1431686830358438043, guid: 1b35db4160e2de74ebbf028b5bfb0bb1,
-    type: 3}
-  jumpCoinPatternToPool: {fileID: 1431686830358438043, guid: aaa8a6d00248607468284307bef57318,
-    type: 3}
-  lineCoinPatternToPool: {fileID: 1431686830358438043, guid: b4d7721026e1e594d91b49df0d4d186b,
-    type: 3}
+  coinsToPool:
+  - {fileID: 1431686830358438043, guid: 1b35db4160e2de74ebbf028b5bfb0bb1, type: 3}
+  - {fileID: 1431686830358438043, guid: aaa8a6d00248607468284307bef57318, type: 3}
+  - {fileID: 1431686830358438043, guid: b4d7721026e1e594d91b49df0d4d186b, type: 3}
+  - {fileID: 1431686830358438043, guid: d172a6df96d2d894ba32bf2e4312a5a5, type: 3}
+  - {fileID: 1431686830358438043, guid: d2d45f5c231dfe64db2291e28ef082e7, type: 3}
   amountCoinPatternsToPool: 1
-  pooledCloudPatterns: []
-  cloudPattern01ToPool: {fileID: 1387365988225721993, guid: 1918210b1bdf21844a0b1cf337582803,
-    type: 3}
-  cloudPattern02ToPool: {fileID: 1387365988225721993, guid: 1918210b1bdf21844a0b1cf337582803,
-    type: 3}
-  cloudPattern03ToPool: {fileID: 1387365988225721993, guid: 1918210b1bdf21844a0b1cf337582803,
-    type: 3}
+  cloudsToPool:
+  - {fileID: 1387365988225721993, guid: 1918210b1bdf21844a0b1cf337582803, type: 3}
+  - {fileID: 1387365988225721993, guid: 1918210b1bdf21844a0b1cf337582803, type: 3}
+  - {fileID: 1387365988225721993, guid: 1918210b1bdf21844a0b1cf337582803, type: 3}
   amountCloudPatternsToPool: 1
 --- !u!4 &2009078277
 Transform:

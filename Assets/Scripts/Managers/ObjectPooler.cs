@@ -1,37 +1,29 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 public class ObjectPooler : MonoBehaviour
 {
-    //Obstacles
     public static ObjectPooler SharedInstance;
-    public List<GameObject> pooledObstacles;
-    public GameObject obstaclesToPool;
+    
+    //Obstacles
+    public List<GameObject> obstaclesToPool;
     public int amountObstaclesToPool;
+    [HideInInspector] public List<GameObject> pooledObstacles;
 
     //Powerups
-    public List<GameObject> pooledPowerups;
-    public GameObject dashPowerupToPool;
-    public GameObject slowMoPowerupToPool;
-    public GameObject invincibilityPowerupToPool;
+    public List<GameObject> powerupsToPool;
+    private List<GameObject> _pooledPowerups;
     public int amountPowerupsToPool;
 
     //Coins
-    public List<GameObject> pooledCoinPatterns;
-    [FormerlySerializedAs("tapPatterToPool")] public GameObject trianglePatterToPool;
-    [FormerlySerializedAs("slidePatternToPool")] public GameObject rombPatternToPool;
-    [FormerlySerializedAs("abducePatternToPool")] public GameObject bCoinPatternToPool;
-    public GameObject jumpCoinPatternToPool;
-    public GameObject lineCoinPatternToPool;
+    public List<GameObject> coinsToPool;
+    private List<GameObject> _pooledCoinPatterns;
     public int amountCoinPatternsToPool;
 
     //Clouds
-    public List<GameObject> pooledCloudPatterns;
-    public GameObject cloudPattern01ToPool;
-    public GameObject cloudPattern02ToPool;
-    public GameObject cloudPattern03ToPool;
+    public List<GameObject> cloudsToPool;
+    private List<GameObject> _pooledCloudPatterns;
     public int amountCloudPatternsToPool;
 
     private void Awake()
@@ -41,83 +33,32 @@ public class ObjectPooler : MonoBehaviour
 
     private void Start()
     {
-        //Loop through list of pooled objects deactivating them and adding them to the list
+        //Loop through list of objects to pool
+        //deactivating them and adding them
+        //to the list of pooled objects
         pooledObstacles = new List<GameObject>();
-        for (int i = 0; i < amountObstaclesToPool; i++)
+        AddCoinsToPool(obstaclesToPool,amountObstaclesToPool,pooledObstacles);
+
+        _pooledPowerups = new List<GameObject>();
+        AddCoinsToPool(powerupsToPool,amountPowerupsToPool,_pooledPowerups);
+
+        _pooledCoinPatterns = new List<GameObject>();
+        AddCoinsToPool(coinsToPool, amountCoinPatternsToPool, _pooledCoinPatterns);
+        
+        _pooledCloudPatterns = new List<GameObject>();
+        AddCoinsToPool(cloudsToPool,amountCloudPatternsToPool,_pooledCloudPatterns);
+    }
+
+    private void AddCoinsToPool(List<GameObject> objToPool, int amount, List<GameObject> pooledObj)
+    {
+        for (int i = 0; i < amount; i++)
         {
-            GameObject obj = (GameObject)Instantiate(obstaclesToPool);
-            obj.SetActive(false);
-            pooledObstacles.Add(obj);
-            obj.transform.SetParent(this.transform); //set child of Game Manager or other object attached to script
-        }
-
-
-        pooledPowerups = new List<GameObject>();
-        for (int i = 0; i < amountPowerupsToPool; i++)
-        {
-            GameObject dash = (GameObject)Instantiate(dashPowerupToPool);
-            GameObject slow = (GameObject)Instantiate(slowMoPowerupToPool);
-            GameObject invinc = (GameObject)Instantiate(invincibilityPowerupToPool);
-
-            dash.SetActive(false);
-            slow.SetActive(false);
-            invinc.SetActive(false);
-
-            pooledPowerups.Add(dash);
-            pooledPowerups.Add(slow);
-            pooledPowerups.Add(invinc);
-
-            dash.transform.SetParent(this.transform);
-            slow.transform.SetParent(this.transform);
-            invinc.transform.SetParent(this.transform);
-        }
-
-        pooledCoinPatterns = new List<GameObject>();
-        for (int i = 0; i < amountCoinPatternsToPool; i++)
-        {
-            GameObject tapPattern = (GameObject)Instantiate(trianglePatterToPool);
-            GameObject slidePattern = (GameObject)Instantiate(rombPatternToPool);
-            GameObject abducePattern = (GameObject)Instantiate(bCoinPatternToPool);
-            GameObject linePattern = (GameObject) Instantiate(lineCoinPatternToPool);
-            GameObject jumpPattern = (GameObject) Instantiate(jumpCoinPatternToPool);
-
-            tapPattern.SetActive(false);
-            slidePattern.SetActive(false);
-            abducePattern.SetActive(false);
-            linePattern.SetActive(false);
-            jumpPattern.SetActive(false);
-
-            pooledCoinPatterns.Add(tapPattern);
-            pooledCoinPatterns.Add(slidePattern);
-            pooledCoinPatterns.Add(abducePattern);
-            pooledCoinPatterns.Add(linePattern);
-            pooledCoinPatterns.Add(jumpPattern);
-
-            tapPattern.transform.SetParent(this.transform);
-            slidePattern.transform.SetParent(this.transform);
-            abducePattern.transform.SetParent(this.transform);
-            linePattern.transform.SetParent(this.transform);
-            jumpPattern.transform.SetParent(this.transform);
-        }
-
-        pooledCloudPatterns = new List<GameObject>();
-        for (int i = 0; i < amountCloudPatternsToPool; i++)
-        {
-            GameObject cloudPattern01 = (GameObject)Instantiate(cloudPattern01ToPool);
-            GameObject cloudPattern02 = (GameObject)Instantiate(cloudPattern02ToPool);
-            GameObject cloudPattern03 = (GameObject)Instantiate(cloudPattern03ToPool);
-
-            cloudPattern01.SetActive(false);
-            cloudPattern02.SetActive(false);
-            cloudPattern03.SetActive(false);
-
-            pooledCloudPatterns.Add(cloudPattern01);
-            pooledCloudPatterns.Add(cloudPattern02);
-            pooledCloudPatterns.Add(cloudPattern03);
-
-            cloudPattern01.transform.SetParent(this.transform);
-            cloudPattern02.transform.SetParent(this.transform);
-            cloudPattern03.transform.SetParent(this.transform);
+            for (int j = 0; j < objToPool.Count; j++)
+            {
+                GameObject obj = (GameObject) Instantiate(objToPool[j], this.transform, true);
+                obj.SetActive(false);
+                pooledObj.Add(obj);
+            }
         }
     }
 
@@ -137,15 +78,14 @@ public class ObjectPooler : MonoBehaviour
 
     public GameObject GetPooledPowerup()
     {
-        for (int i = 0; i < pooledPowerups.Count; i++)
+        for (int i = 0; i < _pooledPowerups.Count; i++)
         {
             int j = SimpleDiceRoller(); 
-            if (!pooledPowerups[j].activeInHierarchy)
+            if (!_pooledPowerups[j].activeInHierarchy)
             {
-                return pooledPowerups[j];
+                return _pooledPowerups[j];
             }    
         }
-
         return null;
     }
 
@@ -157,31 +97,31 @@ public class ObjectPooler : MonoBehaviour
 
             if (randomValue < .20)
             {
-                GameObject trianglePattern = pooledCoinPatterns.Find(x => x.name.Contains("CoinPatternTriangle"));
+                GameObject trianglePattern = _pooledCoinPatterns.Find(x => x.name.Contains("CoinPatternTriangle"));
 
                 if (!trianglePattern.activeInHierarchy) return trianglePattern;
             }
             else if (randomValue > .20 && randomValue < .40)
             {
-                GameObject rombPattern = pooledCoinPatterns.Find(x => x.name.Contains("CoinPatternRomb"));
+                GameObject rombPattern = _pooledCoinPatterns.Find(x => x.name.Contains("CoinPatternRomb"));
 
                 if (!rombPattern.activeInHierarchy) return rombPattern;
             }
             else if (randomValue > .40 && randomValue < .50)
             {
-                GameObject bCoinPattern = pooledCoinPatterns.Find((x => x.name.Contains("CoinPatternBCoin")));
+                GameObject bCoinPattern = _pooledCoinPatterns.Find((x => x.name.Contains("CoinPatternBCoin")));
 
                 if (!bCoinPattern.activeInHierarchy) return bCoinPattern;
             }
             else if (randomValue > .50 && randomValue < .75)
             {
-                GameObject linePattern = pooledCoinPatterns.Find(x => x.name.Contains("CoinPatternLine"));
+                GameObject linePattern = _pooledCoinPatterns.Find(x => x.name.Contains("CoinPatternLine"));
 
                 if (!linePattern.activeInHierarchy) return linePattern;
             }
             else if (randomValue > .75)
             {
-                GameObject jumpPattern = pooledCoinPatterns.Find(x => x.name.Contains("CoinPatternJump"));
+                GameObject jumpPattern = _pooledCoinPatterns.Find(x => x.name.Contains("CoinPatternJump"));
                 if (!jumpPattern.activeInHierarchy) return jumpPattern;
             }
         }
@@ -189,11 +129,11 @@ public class ObjectPooler : MonoBehaviour
 
     public GameObject GetPooledCloudPattern()
     {
-        for (int i = 0; i < pooledCloudPatterns.Count; i++)
+        for (int i = 0; i < _pooledCloudPatterns.Count; i++)
         {
-            if (!pooledCloudPatterns[i].activeInHierarchy)
+            if (!_pooledCloudPatterns[i].activeInHierarchy)
             {
-                return pooledCloudPatterns[i];
+                return _pooledCloudPatterns[i];
             }
         }
 
