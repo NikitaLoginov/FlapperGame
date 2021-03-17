@@ -1,10 +1,8 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class SpawnManager : MonoBehaviour
 {
-    private bool _isGameOver;
     private DifficultyManager _difficultyManager;
     private GameManager _gameManager;
     
@@ -23,8 +21,6 @@ public class SpawnManager : MonoBehaviour
     {
         _gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         _difficultyManager = GameObject.Find("DifficultyManager").GetComponent<DifficultyManager>();
-
-        _isGameOver = _gameManager.IsGameOver;
         
         
         EventBroker.StartGameHandler += StartSpawning;

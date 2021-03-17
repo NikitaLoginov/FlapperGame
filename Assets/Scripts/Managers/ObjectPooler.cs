@@ -37,19 +37,19 @@ public class ObjectPooler : MonoBehaviour
         //deactivating them and adding them
         //to the list of pooled objects
         pooledObstacles = new List<GameObject>();
-        AddCoinsToPool(obstaclesToPool,amountObstaclesToPool,pooledObstacles);
+        AddObjectsToPool(obstaclesToPool,amountObstaclesToPool,pooledObstacles);
 
         _pooledPowerups = new List<GameObject>();
-        AddCoinsToPool(powerupsToPool,amountPowerupsToPool,_pooledPowerups);
+        AddObjectsToPool(powerupsToPool,amountPowerupsToPool,_pooledPowerups);
 
         _pooledCoinPatterns = new List<GameObject>();
-        AddCoinsToPool(coinsToPool, amountCoinPatternsToPool, _pooledCoinPatterns);
+        AddObjectsToPool(coinsToPool, amountCoinPatternsToPool, _pooledCoinPatterns);
         
         _pooledCloudPatterns = new List<GameObject>();
-        AddCoinsToPool(cloudsToPool,amountCloudPatternsToPool,_pooledCloudPatterns);
+        AddObjectsToPool(cloudsToPool,amountCloudPatternsToPool,_pooledCloudPatterns);
     }
 
-    private void AddCoinsToPool(List<GameObject> objToPool, int amount, List<GameObject> pooledObj)
+    private void AddObjectsToPool(List<GameObject> objToPool, int amount, List<GameObject> pooledObj)
     {
         for (int i = 0; i < amount; i++)
         {
