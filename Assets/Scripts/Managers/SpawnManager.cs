@@ -28,9 +28,9 @@ public class SpawnManager : MonoBehaviour
     }
     private void StartSpawning()
     {
-        Debug.Log("Started spawning objects", this);
         EventBroker.DifficultyHandler += _difficultyManager.ModifyDifficulty;
-        _difficultyManager.CreateShrinkersList();
+        //_difficultyManager.CreateShrinkersList();
+        EventBroker.CallCreateShrinkerList();
         
         InvokeRepeating(nameof(SpawnObstacle),0.5f,_spawnRate * _difficultyManager.DifficultyModifier);
         InvokeRepeating(nameof(SpawnPowerups),0.5f,_powerupSpawnRate * _difficultyManager.DifficultyModifier);
@@ -87,7 +87,6 @@ public class SpawnManager : MonoBehaviour
                     pooledPowerup.transform.GetChild(i).gameObject.SetActive(true);
                 }
             }
-            Debug.Log("Powerup spawned",this);
             _powerupSpawnRate = GetSpawnRate();
     }
 

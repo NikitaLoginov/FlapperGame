@@ -29,6 +29,10 @@ public class EventBroker : MonoBehaviour
     public static event Action InvincibilityHandler;
     public static event Action SlowMotionHandler;
     public static event Action DashHandler;
+    
+    //Shrinking
+    public static event Action ShrinkingHandler;
+    public static event Action CreateShrinkerListHandler;
 
 
     public static void CallCanStartGame()
@@ -137,5 +141,16 @@ public class EventBroker : MonoBehaviour
     public static void CallDash()
     {
         DashHandler?.Invoke();
+    }
+    
+    //Shrinking
+    public static void CallCreateShrinkerList()
+    {
+        CreateShrinkerListHandler?.Invoke();
+    }
+
+    public static void CallShrinking()
+    {
+        ShrinkingHandler?.Invoke();
     }
 }
